@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Твоя энергия без скачков | Бесплатный гид по питанию</title>
+    <title>Твоя энергия без скачков | Интерактивный гид по питанию</title>
     
     <!-- ====== НАСТРОЙКИ ПРИЛОЖЕНИЯ (PWA) ====== -->
     <link rel="icon" type="image/png" href="icon-192.png">
@@ -11,7 +11,7 @@
     <link rel="manifest" href="manifest.json">
     <!-- ======================================== -->
     
-    <meta name="description" content="Бесплатный онлайн-гид по питанию: генератор рациона, таблица продуктов, меню на неделю, список покупок и чек-листы. PDF-гид за 452 тенге через WhatsApp.">
+    <meta name="description" content="Бесплатный интерактивный гид по питанию: генератор рациона, таблица продуктов, меню, список покупок и чек-листы. Оплата PDF-версии через WhatsApp.">
     
     <style>
         :root {
@@ -285,6 +285,7 @@
         .pdf-hero p { font-size: 1.05rem; color: var(--text); margin-bottom: 8px; }
         .price { font-size: 3rem; font-weight: 800; color: var(--primary); margin: 18px 0; }
         .price small { font-size: 1.1rem; font-weight: 400; color: var(--text-light); }
+        
         .btn-whatsapp { 
             display: inline-flex; 
             align-items: center; 
@@ -351,7 +352,7 @@
 <div class="container">
     <header>
         <h1>🌿 Твоя энергия без скачков</h1>
-        <p>Бесплатный гид по питанию, сахару, холестерину и витаминам</p>
+        <p>Интерактивный гид по питанию, сахару, холестерину и витаминам</p>
     </header>
 
     <div class="disclaimer-box">
@@ -365,7 +366,7 @@
         <button class="tab-btn" onclick="openTab(event, 'menu')">📅 Меню</button>
         <button class="tab-btn" onclick="openTab(event, 'shopping')">🛒 Покупки</button>
         <button class="tab-btn" onclick="openTab(event, 'checklists')">✅ Чек-листы</button>
-        <button class="tab-btn" onclick="openTab(event, 'access')">🔓 PDF-Гид</button>
+        <button class="tab-btn" onclick="openTab(event, 'pdf')">📥 PDF-Гид</button>
     </div>
 
     <!-- ВКЛАДКА 1: ГЕНЕРАТОР -->
@@ -730,14 +731,33 @@
     </div>
 
     <!-- ВКЛАДКА 6: PDF-ГИД -->
-    <div id="access" class="tab-content">
+    <div id="pdf" class="tab-content">
         <div class="pdf-hero">
             <h2>📥 Полный PDF-гид «Твоя энергия без скачков»</h2>
             <p>Всё, что вы видите на сайте — в удобном PDF-формате. Читайте где угодно, без интернета.</p>
             <div class="price">452 <small>тенге</small></div>
-            <a href="https://wa.me/77777717707?text=Здравствуйте!%20Хочу%20оплатить%20и%20получить%20PDF-гид%20«Твоя%20энергия%20без%20скачков»%20(452%20тенге)" target="_blank" class="btn-whatsapp">
-                💬 Оплатить в WhatsApp и получить PDF
-            </a>
+            
+            <div style="display: flex; flex-direction: column; gap: 12px; align-items: center; margin-top: 20px;">
+                <!-- ТОЛЬКО КНОПКА WHATSAPP (Никаких прямых скачиваний) -->
+                <a href="https://wa.me/77777717707?text=Здравствуйте!%20Хочу%20оплатить%20и%20получить%20PDF-гид%20«Твоя%20энергия%20без%20скачков»%20(452%20тенге)" target="_blank" class="btn-whatsapp" style="width: 100%; max-width: 400px;">
+                    💬 Оплатить и получить в WhatsApp
+                </a>
+                
+                <p style="font-size: 0.95rem; color: var(--primary); font-weight: 700; margin-top: 10px;">
+                    * После оплаты вы получите доступ к скачиванию интерактивного PDF-файла.
+                </p>
+            </div>
+        </div>
+
+        <div class="instruction-block" style="border-left: 5px solid var(--success);">
+            <h3>💳 Как происходит оплата и получение файла?</h3>
+            <ol>
+                <li>Нажмите кнопку <strong>«💬 Оплатить и получить в WhatsApp»</strong> выше.</li>
+                <li>Откроется чат с номером <strong>+7 777 771 77 07</strong>. Напишите нам «Хочу оплатить». </li>
+                <li>Мы пришлем вам <strong>номер карты или ссылку Kaspi</strong> для перевода.</li>
+                <li>Переведите <strong>452 тенге</strong>.</li>
+                <li>Пришлите скриншот перевода. Мы сразу же отправим вам <strong>ссылку на скачивание PDF</strong> или сам файл в ответ!</li>
+            </ol>
         </div>
 
         <div class="instruction-block">
@@ -747,18 +767,8 @@
                 <li><strong>📅 Меню на неделю</strong> — готовый план питания с низким ГИ.</li>
                 <li><strong>🛒 Список покупок</strong> — сгруппированный по отделам магазина.</li>
                 <li><strong>✅ Чек-листы</strong> — скрытые сахара, порядок еды, ферритин и витамин D.</li>
+                <li><strong>💡 Советы по усвоению</strong> — как правильно сочетать продукты.</li>
             </ul>
-        </div>
-
-        <div class="instruction-block">
-            <h3>📝 Как скачать PDF (пошагово):</h3>
-            <ol>
-                <li>Нажмите зелёную кнопку <strong>«💬 Оплатить в WhatsApp и получить PDF»</strong> выше.</li>
-                <li>Откроется чат с номером <strong>+7 777 771 77 07</strong> с готовым сообщением. Отправьте его.</li>
-                <li>В ответ вы получите <strong>реквизиты для оплаты</strong> (Kaspi или карта).</li>
-                <li>Переведите <strong>452 тенге</strong> и пришлите скриншот перевода.</li>
-                <li>В ответ мы отправим <strong>PDF-файл</strong> — сохраните его на телефон или компьютер.</li>
-            </ol>
         </div>
 
         <div class="instruction-block">
@@ -768,11 +778,10 @@
                     <tr><th>Где</th><th>Как открыть</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td><strong>Телефон</strong></td><td>Сохранить в «Файлы» / «Загрузки» → открыть в любом PDF-просмотрщике (Adobe, встроенный на iPhone/Android).</td></tr>
-                    <tr><td><strong>Компьютер</strong></td><td>Скачать → открыть двойным кликом в браузере или Adobe Reader.</td></tr>
-                    <tr><td><strong>Без интернета</strong></td><td>PDF сохраняется на устройстве и читается офлайн — в самолёте, на даче, где угодно.</td></tr>
-                    <tr><td><strong>Распечатать</strong></td><td>Открыть → <code>Ctrl+P</code> (или «Поделиться → Печать») → носить с собой на бумаге.</td></tr>
-                    <tr><td><strong>На неделю</strong></td><td>Открыть вкладки «📅 Меню» и «🛒 Покупки» прямо с телефона в магазине — интернет нужен только для загрузки страницы.</td></tr>
+                    <tr><td><strong>Телефон</strong></td><td>Сохранить в «Файлы» / «Загрузки» → открыть в любом PDF-просмотрщике.</td></tr>
+                    <tr><td><strong>Компьютер</strong></td><td>Скачать → открыть двойным кликом в браузере.</td></tr>
+                    <tr><td><strong>Без интернета</strong></td><td>PDF сохраняется на устройстве и читается офлайн (в магазине, в поездке).</td></tr>
+                    <tr><td><strong>Распечатать</strong></td><td>Открыть → <code>Ctrl+P</code> (Печать).</td></tr>
                 </tbody>
             </table>
         </div>
@@ -782,8 +791,8 @@
         </div>
 
         <div class="instruction-block" style="text-align: center;">
-            <p style="font-size: 1rem; color: var(--text-light); margin-bottom: 12px;">Уже оплатили и потеряли ссылку?</p>
-            <a href="#" onclick="alert('Пожалуйста, напишите нам в WhatsApp на номер +7 777 771 77 07 — мы вышлем PDF повторно!')" style="color: var(--primary); text-decoration: underline; font-weight: 700; font-size: 1rem;">Написать в WhatsApp для повторной отправки</a>
+            <p style="font-size: 1rem; color: var(--text-light); margin-bottom: 12px;">Уже оплатили и потеряли файл?</p>
+            <a href="https://wa.me/77777717707?text=Здравствуйте!%20Я%20уже%20оплатил%20PDF-гид,%20пришлите%20пожалуйста%20файл%20еще%20раз." target="_blank" style="color: var(--primary); text-decoration: underline; font-weight: 700; font-size: 1rem;">Написать в WhatsApp для повторной отправки</a>
         </div>
     </div>
 </div>
@@ -954,13 +963,6 @@
         resDiv.style.display = 'block';
         resDiv.scrollIntoView({ behavior: 'smooth' });
     }
-
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'PrintScreen' || (e.ctrlKey && (e.key === 'p' || e.key === 's'))) {
-            e.preventDefault();
-            alert('Пожалуйста, не копируйте материалы. Скачайте полную версию после оплаты.');
-        }
-    });
 </script>
 </body>
 </html>
