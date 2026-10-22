@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Твоя энергия без скачков | Бесплатный гид по питанию</title>
+    
+    <!-- ====== НАСТРОЙКИ ПРИЛОЖЕНИЯ (PWA) ====== -->
+    <link rel="icon" type="image/png" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="manifest" href="manifest.json">
+    <!-- ======================================== -->
+    
+    <meta name="description" content="Бесплатный онлайн-гид по питанию: генератор рациона, таблица продуктов, меню на неделю, список покупок и чек-листы. PDF-гид за 452 тенге через WhatsApp.">
+    
+    <style>
+        :root {
+            --primary: #1e3d2f;
+            --primary-light: #2d5a45;
+            --accent: #5b8c6f;
+            --accent-light: #e6efe9;
+            --bg: #f7f5f0;
+            --card-bg: #ffffff;
+            --text: #1a2a22;
+            --text-light: #4a5a52;
+            --border: #d4cfc5;
+            --success: #2e7d4f;
+            --warning: #b87333;
+            --danger: #a8433a;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 10px;
+            --shadow-sm: 0 2px 12px rgba(30, 61, 47, 0.08);
+            --shadow-md: 0 8px 30px rgba(30, 61, 47, 0.12);
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+        html { font-size: 17px; }
+        
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            padding: 24px 16px; 
+            display: flex; 
+            justify-content: center; 
+            position: relative; 
+            overflow-x: hidden; 
+            line-height: 1.65;
+            font-size: 1rem;
+        }
+        
+        .watermark-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg width='300' height='300' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='rgba(30,61,47,0.02)' font-family='Segoe UI' transform='rotate(-30 150 150)' text-anchor='middle'%3EТвоя энергия без скачков%3C/text%3E%3C/svg%3E");
+            background-repeat: repeat;
+        }
+
+        .container { 
+            background: var(--card-bg); 
+            max-width: 1100px; 
+            width: 100%; 
+            border-radius: var(--radius-lg); 
+            box-shadow: var(--shadow-md); 
+            overflow: hidden; 
+            position: relative; 
+            z-index: 1; 
+        }
+        
+        header { 
+            background: linear-gradient(135deg, var(--primary), var(--primary-light)); 
+            color: #fff; 
+            padding: 48px 32px; 
+            text-align: center; 
+            position: relative;
+        }
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; left: 0; right: 0;
+            height: 24px;
+            background: var(--card-bg);
+            border-radius: 50% 50% 0 0;
+        }
+        header h1 { font-size: 2.4rem; margin-bottom: 12px; letter-spacing: 0.3px; font-weight: 800; line-height: 1.2; }
+        header p { font-size: 1.15rem; opacity: 0.95; font-weight: 400; }
+
+        .disclaimer-box { 
+            background: #fff4ed; 
+            border-top: 3px solid var(--warning); 
+            border-bottom: 3px solid var(--warning); 
+            padding: 22px 32px; 
+            color: var(--text); 
+        }
+        .disclaimer-box h3 { color: var(--warning); font-size: 1.1rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; font-weight: 700; }
+        .disclaimer-box p { font-size: 0.95rem; line-height: 1.6; margin-bottom: 8px; color: var(--text); }
+        .disclaimer-box strong { color: var(--danger); font-weight: 700; }
+        
+        /* ===== ВКЛАДКИ ===== */
+        .tabs { 
+            display: flex; 
+            background: var(--accent-light); 
+            border-bottom: 2px solid var(--border); 
+            flex-wrap: wrap; 
+            padding: 8px 12px 0; 
+            gap: 6px;
+        }
+        .tab-btn { 
+            flex: 1; 
+            padding: 18px 16px; 
+            border: none; 
+            background: none; 
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-light); 
+            cursor: pointer; 
+            transition: 0.25s; 
+            text-align: center; 
+            min-width: 150px;
+            border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+            margin-top: 4px;
+            white-space: nowrap;
+        }
+        .tab-btn:hover { color: var(--primary); background: rgba(255,255,255,0.6); }
+        .tab-btn.active { 
+            color: var(--primary); 
+            background: var(--card-bg); 
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+            font-weight: 800;
+            border-bottom: 3px solid var(--primary);
+        }
+        
+        .tab-content { display: none; padding: 32px; animation: fadeIn 0.35s ease-in-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .intro-text { 
+            font-size: 1.05rem; 
+            line-height: 1.75; 
+            color: var(--text); 
+            margin-bottom: 28px; 
+            background: var(--accent-light); 
+            padding: 20px 24px; 
+            border-radius: var(--radius-md); 
+            border-left: 5px solid var(--accent); 
+            font-weight: 500;
+        }
+
+        /* ===== ВЫБОР ЦЕЛИ ===== */
+        .goal-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 28px; }
+        .goal-btn { 
+            padding: 22px 14px; 
+            border: 2px solid var(--border); 
+            border-radius: var(--radius-md); 
+            background: var(--card-bg); 
+            cursor: pointer; 
+            text-align: center; 
+            transition: 0.25s; 
+            font-family: inherit; 
+        }
+        .goal-btn:hover { border-color: var(--accent); background: var(--accent-light); transform: translateY(-2px); }
+        .goal-btn.active { 
+            border-color: var(--primary); 
+            background: var(--primary); 
+            color: #fff; 
+            box-shadow: 0 6px 20px rgba(30,61,47,0.25); 
+        }
+        .goal-btn .goal-icon { font-size: 2.2rem; display: block; margin-bottom: 10px; }
+        .goal-btn .goal-text { font-size: 0.95rem; font-weight: 700; line-height: 1.3; }
+        
+        @media (max-width: 768px) {
+            .goal-selector { grid-template-columns: 1fr 1fr; }
+            .goal-btn { padding: 16px 10px; }
+            .goal-btn .goal-icon { font-size: 1.8rem; }
+            .goal-btn .goal-text { font-size: 0.88rem; }
+        }
+
+        /* ===== ГЕНЕРАТОР ===== */
+        .generator-box { 
+            background: var(--accent-light); 
+            border: 1px solid var(--border); 
+            border-radius: var(--radius-md); 
+            padding: 28px; 
+            margin-bottom: 28px; 
+        }
+        .input-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .input-item { 
+            display: flex; 
+            flex-direction: column; 
+            background: var(--card-bg); 
+            padding: 18px; 
+            border-radius: var(--radius-sm); 
+            border: 1px solid var(--border); 
+        }
+        .input-item label { font-weight: 700; font-size: 0.95rem; margin-bottom: 8px; color: var(--primary); }
+        .input-item input { 
+            padding: 14px; 
+            border: 1.5px solid var(--border); 
+            border-radius: 10px; 
+            font-size: 17px; 
+            width: 100%; 
+            background: #fafaf8;
+            color: var(--text);
+            transition: 0.2s;
+            font-weight: 500;
+        }
+        .input-item input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(91,140,111,0.2); }
+        .input-item small { color: var(--text-light); font-size: 0.85rem; margin-top: 6px; font-weight: 500; }
+        
+        .btn-generate { 
+            background: var(--primary); 
+            color: #fff; 
+            border: none; 
+            padding: 20px; 
+            border-radius: var(--radius-sm); 
+            font-size: 1.15rem; 
+            font-weight: 700; 
+            width: 100%; 
+            cursor: pointer; 
+            transition: 0.25s; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 10px; 
+            letter-spacing: 0.3px;
+        }
+        .btn-generate:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(30,61,47,0.25); }
+
+        /* ===== РЕЗУЛЬТАТЫ ===== */
+        #recommendationResult { display: none; margin-top: 28px; animation: fadeIn 0.4s; }
+        #recommendationResult h3 { font-size: 1.3rem; margin-bottom: 18px; color: var(--primary); font-weight: 700; }
+        .rec-card { 
+            background: var(--card-bg); 
+            border-radius: var(--radius-md); 
+            padding: 24px; 
+            box-shadow: var(--shadow-sm); 
+            margin-bottom: 16px; 
+            border-left: 6px solid var(--danger); 
+        }
+        .rec-card h4 { color: var(--danger); margin-bottom: 14px; font-size: 1.1rem; font-weight: 800; }
+        .rec-card ul { margin-left: 22px; line-height: 1.75; color: var(--text); font-size: 1rem; }
+        .rec-card ul li { margin-bottom: 10px; }
+        .rec-card.good { border-left-color: var(--success); }
+        .rec-card.good h4 { color: var(--success); }
+
+        /* ===== ТАБЛИЦЫ ===== */
+        .table-wrapper { overflow-x: auto; border-radius: var(--radius-md); border: 1px solid var(--border); margin-bottom: 24px; -webkit-overflow-scrolling: touch; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 1rem; min-width: 650px; }
+        th, td { padding: 16px 18px; border-bottom: 1px solid var(--border); vertical-align: top; }
+        th { background: var(--accent-light); font-weight: 700; color: var(--primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        tr:hover { background: #fafaf8; }
+        td { color: var(--text); font-size: 0.98rem; }
+        .category-row td { background: var(--accent-light); font-weight: 800; color: var(--primary); font-size: 1.05rem; }
+        .val-low { color: var(--success); font-weight: 800; }
+        .val-neutral { color: var(--warning); font-weight: 800; }
+        .val-high { color: var(--danger); font-weight: 800; }
+
+        /* ===== МЕНЮ ===== */
+        .menu-day { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 16px; overflow: hidden; box-shadow: var(--shadow-sm); }
+        .menu-day-header { background: var(--primary); color: #fff; padding: 16px 22px; font-weight: 700; font-size: 1.1rem; }
+        .menu-day-body { padding: 22px; }
+        .menu-meal { margin-bottom: 14px; font-size: 1rem; line-height: 1.7; color: var(--text); }
+        .menu-meal:last-child { margin-bottom: 0; }
+        .menu-meal strong { color: var(--primary); display: inline-block; width: 95px; font-weight: 700; }
+
+        /* ===== СПИСОК ПОКУПОК ===== */
+        .shopping-list { list-style: none; padding: 0; }
+        .shopping-category { font-weight: 800; color: var(--primary); font-size: 1.15rem; margin-top: 26px; margin-bottom: 14px; border-bottom: 2px solid var(--accent); padding-bottom: 8px; }
+        .shopping-item { display: flex; align-items: center; margin-bottom: 12px; font-size: 1rem; color: var(--text); }
+        .shopping-item input { margin-right: 14px; width: 20px; height: 20px; cursor: pointer; accent-color: var(--primary); }
+
+        /* ===== ЧЕК-ЛИСТЫ ===== */
+        .checklist-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 26px; margin-bottom: 24px; box-shadow: var(--shadow-sm); }
+        .checklist-box h3 { color: var(--primary); margin-bottom: 20px; border-bottom: 2px solid var(--accent); padding-bottom: 12px; font-size: 1.15rem; font-weight: 800; }
+        .checklist-item { display: flex; align-items: flex-start; margin-bottom: 16px; font-size: 1rem; line-height: 1.65; color: var(--text); }
+        .checklist-item input[type="checkbox"] { margin-top: 4px; margin-right: 14px; width: 20px; height: 20px; cursor: pointer; flex-shrink: 0; accent-color: var(--primary); }
+
+        .nutrient-block { background: #fff4ed; border-left: 6px solid var(--warning); border-radius: var(--radius-sm); padding: 22px 26px; margin-bottom: 24px; }
+        .nutrient-block h4 { color: var(--warning); margin-bottom: 14px; font-size: 1.1rem; font-weight: 800; }
+        .nutrient-block ul { margin-left: 22px; line-height: 1.75; font-size: 1rem; color: var(--text); }
+        .nutrient-block ul li { margin-bottom: 8px; }
+
+        /* ===== PDF-ГИД ===== */
+        .pdf-hero { text-align: center; background: var(--accent-light); padding: 40px 24px; border-radius: var(--radius-md); border: 2px dashed var(--accent); margin-bottom: 28px; }
+        .pdf-hero h2 { font-size: 1.5rem; color: var(--primary); margin-bottom: 12px; }
+        .pdf-hero p { font-size: 1.05rem; color: var(--text); margin-bottom: 8px; }
+        .price { font-size: 3rem; font-weight: 800; color: var(--primary); margin: 18px 0; }
+        .price small { font-size: 1.1rem; font-weight: 400; color: var(--text-light); }
+        .btn-whatsapp { 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 10px; 
+            background: #1eb954; 
+            color: #fff; 
+            padding: 20px 48px; 
+            font-size: 1.15rem; 
+            font-weight: 700; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            transition: 0.25s; 
+            box-shadow: 0 6px 20px rgba(30,185,84,0.35); 
+        }
+        .btn-whatsapp:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(30,185,84,0.45); }
+
+        .instruction-block { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 26px; margin-bottom: 24px; box-shadow: var(--shadow-sm); }
+        .instruction-block h3 { color: var(--primary); margin-bottom: 18px; font-size: 1.15rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+        .instruction-block ol { margin-left: 22px; line-height: 1.75; color: var(--text); font-size: 1rem; }
+        .instruction-block ol li { margin-bottom: 12px; }
+        .instruction-block ol li strong { color: var(--primary); }
+
+        .pdf-how-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+        .pdf-how-table th, .pdf-how-table td { padding: 14px 16px; border-bottom: 1px solid var(--border); text-align: left; font-size: 0.98rem; }
+        .pdf-how-table th { background: var(--accent-light); color: var(--primary); font-weight: 700; }
+        .pdf-how-table td { color: var(--text); }
+        .pdf-how-table tr:last-child td { border-bottom: none; }
+
+        .pdf-tip { background: #eef5f0; border-left: 6px solid var(--success); border-radius: var(--radius-sm); padding: 20px 24px; margin-bottom: 24px; font-size: 1rem; line-height: 1.7; color: var(--text); }
+        .pdf-tip strong { color: var(--success); }
+
+        /* ===== АДАПТИВНОСТЬ ===== */
+        @media (max-width: 768px) {
+            html { font-size: 16px; }
+            body { padding: 12px 8px; }
+            header { padding: 36px 20px; }
+            header h1 { font-size: 1.8rem; }
+            header p { font-size: 1rem; }
+            .tabs { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 6px 8px 0; }
+            .tabs::-webkit-scrollbar { display: none; }
+            .tab-btn { flex: 0 0 auto; font-size: 0.95rem; padding: 14px 16px; min-width: auto; }
+            .tab-content { padding: 20px 16px; }
+            .generator-box { padding: 20px 16px; }
+            .input-grid { grid-template-columns: 1fr; }
+            .btn-generate { padding: 18px; font-size: 1.05rem; }
+            .btn-whatsapp { width: 100%; padding: 18px; font-size: 1.05rem; }
+            .menu-meal strong { display: block; width: auto; margin-bottom: 4px; }
+            .goal-selector { grid-template-columns: 1fr 1fr; }
+            .goal-btn { padding: 16px 10px; }
+            .goal-btn .goal-icon { font-size: 1.8rem; }
+            .price { font-size: 2.5rem; }
+            .disclaimer-box { padding: 18px 20px; }
+            .disclaimer-box h3 { font-size: 1rem; }
+            .rec-card ul { margin-left: 18px; }
+            .instruction-block, .pdf-hero { padding: 20px 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="watermark-overlay"></div>
+
+<div class="container">
+    <header>
+        <h1>🌿 Твоя энергия без скачков</h1>
+        <p>Бесплатный гид по питанию, сахару, холестерину и витаминам</p>
+    </header>
+
+    <div class="disclaimer-box">
+        <h3>⚠️ ВАЖНО: Ознакомительный контент</h3>
+        <p>Данный сервис <strong>не является медицинской рекомендацией</strong>. Сгенерированный рацион носит образовательный характер. <strong>Обязательно посоветуйтесь с врачом</strong> перед изменением диеты и приёмом добавок.</p>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openTab(event, 'generator')">🧬 Мой рацион</button>
+        <button class="tab-btn" onclick="openTab(event, 'products')">📊 Таблица</button>
+        <button class="tab-btn" onclick="openTab(event, 'menu')">📅 Меню</button>
+        <button class="tab-btn" onclick="openTab(event, 'shopping')">🛒 Покупки</button>
+        <button class="tab-btn" onclick="openTab(event, 'checklists')">✅ Чек-листы</button>
+        <button class="tab-btn" onclick="openTab(event, 'access')">🔓 PDF-Гид</button>
+    </div>
+
+    <!-- ВКЛАДКА 1: ГЕНЕРАТОР -->
+    <div id="generator" class="tab-content active">
+        <div class="intro-text">
+            <strong>Что это за сайт?</strong> Это бесплатный онлайн-гид для людей, которые хотят держать сахар под контролем, снизить «плохой» холестерин, поддержать щитовидку, ферритин и витамин D. Выберите цель ниже → введите свои анализы → получите персональный список «что исключить / что добавить». Без регистрации.
+        </div>
+
+        <div class="goal-selector">
+            <button class="goal-btn active" data-goal="sugar" onclick="selectGoal(event, 'sugar')">
+                <span class="goal-icon">📉</span>
+                <span class="goal-text">Снизить сахар</span>
+            </button>
+            <button class="goal-btn" data-goal="cholesterol" onclick="selectGoal(event, 'cholesterol')">
+                <span class="goal-icon">🩸</span>
+                <span class="goal-text">Холестерин</span>
+            </button>
+            <button class="goal-btn" data-goal="thyroid" onclick="selectGoal(event, 'thyroid')">
+                <span class="goal-icon">🦋</span>
+                <span class="goal-text">Щитовидка</span>
+            </button>
+            <button class="goal-btn" data-goal="iron" onclick="selectGoal(event, 'iron')">
+                <span class="goal-icon">🩸</span>
+                <span class="goal-text">Ферритин</span>
+            </button>
+            <button class="goal-btn" data-goal="vitd" onclick="selectGoal(event, 'vitd')">
+                <span class="goal-icon">☀️</span>
+                <span class="goal-text">Витамин D</span>
+            </button>
+            <button class="goal-btn" data-goal="all" onclick="selectGoal(event, 'all')">
+                <span class="goal-icon">🎯</span>
+                <span class="goal-text">Всё сразу</span>
+            </button>
+        </div>
+
+        <div class="generator-box">
+            <div class="input-grid">
+                <div class="input-item" data-goal="sugar">
+                    <label>Глюкоза натощак</label>
+                    <input type="number" id="gen_glucose" step="0.1" placeholder="ммоль/л">
+                    <small>Норма: < 5.6</small>
+                </div>
+                <div class="input-item" data-goal="sugar">
+                    <label>HbA1c (гликированный)</label>
+                    <input type="number" id="gen_hba1c" step="0.1" placeholder="%">
+                    <small>Норма: < 5.7%</small>
+                </div>
+                <div class="input-item" data-goal="sugar">
+                    <label>Инсулин натощак</label>
+                    <input type="number" id="gen_insulin" step="0.1" placeholder="мкЕд/мл">
+                    <small>Оптимум: < 8.5</small>
+                </div>
+
+                <div class="input-item" data-goal="cholesterol" style="display: none;">
+                    <label>ЛПНП («плохой» холестерин)</label>
+                    <input type="number" id="gen_ldl" step="0.1" placeholder="ммоль/л">
+                    <small>Цель: < 2.6</small>
+                </div>
+                <div class="input-item" data-goal="cholesterol" style="display: none;">
+                    <label>Триглицериды</label>
+                    <input type="number" id="gen_trig" step="0.1" placeholder="ммоль/л">
+                    <small>Норма: < 1.7</small>
+                </div>
+
+                <div class="input-item" data-goal="thyroid" style="display: none;">
+                    <label>ТТГ (щитовидная железа)</label>
+                    <input type="number" id="gen_tsh" step="0.1" placeholder="мЕд/л">
+                    <small>Норма: 0.4 - 4.0</small>
+                </div>
+
+                <div class="input-item" data-goal="iron" style="display: none;">
+                    <label>Ферритин (запасы железа)</label>
+                    <input type="number" id="gen_ferritin" step="0.1" placeholder="мкг/л">
+                    <small>Оптимум: 50 - 150</small>
+                </div>
+
+                <div class="input-item" data-goal="vitd" style="display: none;">
+                    <label>Витамин D (25-OH)</label>
+                    <input type="number" id="gen_vitd" step="0.1" placeholder="нг/мл">
+                    <small>Оптимум: 30 - 100</small>
+                </div>
+            </div>
+            <button class="btn-generate" onclick="generateRecommendations()">
+                ✨ Сформировать персональный рацион
+            </button>
+        </div>
+
+        <div id="recommendationResult">
+            <h3>Ваши персональные рекомендации:</h3>
+            <div id="exclusionList"></div>
+            <div id="inclusionList"></div>
+            <p style="font-size: 0.9rem; color: var(--text-light); text-align: center; margin-top: 18px;"><em>Данные рекомендации сформированы на основе общих клинических порогов (ADA, ESC, ВОЗ). Не являются заменой консультации врача.</em></p>
+        </div>
+    </div>
+
+    <!-- ВКЛАДКА 2: ТАБЛИЦА -->
+    <div id="products" class="tab-content">
+        <div class="intro-text">Расширенная таблица продуктов. Цифры показывают примерный прирост глюкозы (ммоль/л) или гликемический индекс (ГИ). Старайтесь выбирать зеленую зону.</div>
+        <div class="table-wrapper">
+            <table>
+                <thead><tr><th>Продукт</th><th>Прирост / ГИ</th><th>Комментарий</th></tr></thead>
+                <tbody>
+                    <tr class="category-row"><td colspan="3">🥦 Овощи (Основа рациона)</td></tr>
+                    <tr><td>Брокколи, шпинат, огурцы, кабачки</td><td class="val-low">Практически 0</td><td>Ешьте сколько угодно. Клетчатка замедляет всасывание сахара.</td></tr>
+                    <tr><td>Помидоры, перец болгарский</td><td class="val-low">+0,2</td><td>Отличные источники витамина С (помогает усвоению железа).</td></tr>
+                    <tr><td>Морковь (сырая) / (вареная)</td><td class="val-low">+0,4 / +1,5</td><td>Вареная морковь повышает сахар сильнее.</td></tr>
+                    <tr><td>Картофель (охлажденный)</td><td class="val-high">+2,8</td><td>Резистентный крахмал. Горячий картофель — +3,2.</td></tr>
+                    
+                    <tr class="category-row"><td colspan="3">🍎 Фрукты и ягоды (Порция 150-200 г)</td></tr>
+                    <tr><td>Малина, клубника, ежевика</td><td class="val-low">+0,5</td><td>Самые безопасные ягоды. Богаты витамином С.</td></tr>
+                    <tr><td>Яблоко, груша</td><td class="val-neutral">+1,2</td><td>Ешьте с кожурой, она содержит клетчатку.</td></tr>
+                    <tr><td>Апельсин, грейпфрут</td><td class="val-neutral">+1,6</td><td>Цельные фрукты лучше соков. Витамин С для усвоения железа.</td></tr>
+                    <tr><td>Банан (зеленоватый)</td><td class="val-neutral">+1,4</td><td>Спелый банан дает больше сахара.</td></tr>
+                    <tr><td>Виноград, арбуз, дыня</td><td class="val-high">+1,9</td><td>Высокий скачок. Ешьте строго после основного блюда.</td></tr>
+
+                    <tr class="category-row"><td colspan="3">🌾 Крупы и гарниры</td></tr>
+                    <tr><td>Чечевица, нут, фасоль</td><td class="val-low">+0,5</td><td>Лучший гарнир. Много белка, клетчатки и железа.</td></tr>
+                    <tr><td>Гречка (аль денте)</td><td class="val-neutral">+1,9</td><td>Не разваривайте. Содержит железо.</td></tr>
+                    <tr><td>Булгур, киноа, перловка</td><td class="val-neutral">+1,4</td><td>Хорошая альтернатива рису.</td></tr>
+                    <tr><td>Овсянка длительной варки</td><td class="val-neutral">+1,9</td><td>Хлопья быстрого приготовления — +2,6.</td></tr>
+                    <tr><td>Рис белый, кукурузная каша</td><td class="val-high">+2,9</td><td>Высокий скачок. Ограничить.</td></tr>
+
+                    <tr class="category-row"><td colspan="3">🥩 Белок (Мясо, рыба, яйца)</td></tr>
+                    <tr><td>Курица, индейка (грудка)</td><td class="val-low">0</td><td>Не повышают сахар. Основа обеда.</td></tr>
+                    <tr><td>Рыба (лосось, скумбрия, треска)</td><td class="val-low">0</td><td>Омега-3 снижает ЛПНП. Жирная рыба — источник витамина D.</td></tr>
+                    <tr><td>Яйца</td><td class="val-low">0</td><td>Идеальный завтрак. Желток содержит витамин D и железо.</td></tr>
+                    <tr><td>Печень (говяжья, куриная)</td><td class="val-low">0</td><td>Рекордсмен по железу и витамину D. 1-2 раза в неделю.</td></tr>
+                    <tr><td>Красное мясо (говядина, баранина)</td><td class="val-low">0</td><td>Гемовое железо — усваивается лучше всего.</td></tr>
+                    <tr><td>Колбаса, сосиски</td><td class="val-high">Скрытые жиры</td><td>Исключить. Повышают риск воспалений.</td></tr>
+
+                    <tr class="category-row"><td colspan="3">🍞 Хлеб и макароны</td></tr>
+                    <tr><td>Хлеб из льняной/миндальной муки</td><td class="val-low">~0</td><td>Лучший выбор для тостов.</td></tr>
+                    <tr><td>Цельнозерновой хлеб</td><td class="val-low">+0,8</td><td>В 2,5 раза ниже белого батона.</td></tr>
+                    <tr><td>Макароны из твердых сортов (аль денте)</td><td class="val-neutral">+1,7</td><td>Важно не переваривать!</td></tr>
+                    <tr><td>Белый батон, сдоба</td><td class="val-high">+2,0</td><td>Максимальный скачок. Исключить.</td></tr>
+
+                    <tr class="category-row"><td colspan="3">🥛 Молочные продукты и жиры</td></tr>
+                    <tr><td>Греческий йогурт (без сахара)</td><td class="val-low">+0,3</td><td>Отличный перекус с ягодами.</td></tr>
+                    <tr><td>Авокадо, орехи, семечки</td><td class="val-low">~0</td><td>Полезные жиры. Помогают усвоению витамина D.</td></tr>
+                    <tr><td>Оливковое, льняное масло</td><td class="val-low">0</td><td>Заправляйте салаты. Не жарьте.</td></tr>
+                    <tr><td>Сливочное масло</td><td class="val-neutral">0</td><td>Сахар не повышает, но повышает ЛПНП. Ограничить.</td></tr>
+                    <tr><td>Сыр, творог</td><td class="val-low">0</td><td>Источник кальция и витамина D (в жирных сортах).</td></tr>
+
+                    <tr class="category-row"><td colspan="3">🥤 Напитки</td></tr>
+                    <tr><td>Вода, чай, кофе без сахара</td><td class="val-low">0</td><td>Пейте сколько хотите. Но не запивайте железосодержащую еду чаем/кофе.</td></tr>
+                    <tr><td>Сладкая газировка, соки</td><td class="val-high">Мгновенный скачок</td><td>330 мл колы = 7 ложек сахара. Исключить!</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ВКЛАДКА 3: МЕНЮ -->
+    <div id="menu" class="tab-content">
+        <div class="intro-text">Пример сбалансированного меню на неделю с низким гликемическим индексом. Вы можете менять блюда местами.</div>
+        
+        <div class="menu-day">
+            <div class="menu-day-header">Понедельник</div>
+            <div class="menu-day-body">
+                <div class="menu-meal"><strong>Завтрак:</strong> Омлет из 2 яиц с шпинатом и помидорами. Ломтик цельнозернового хлеба. Зеленый чай.</div>
+                <div class="menu-meal"><strong>Обед:</strong> Салат из огурцов и зелени с оливковым маслом. Запеченная куриная грудка. Гречка (100 г готовой).</div>
+                <div class="menu-meal"><strong>Ужин:</strong> Запеченная рыба (треска) с брокколи. 2 ст.л. чечевицы.</div>
+            </div>
+        </div>
+
+        <div class="menu-day">
+            <div class="menu-day-header">Вторник</div>
+            <div class="menu-day-body">
+                <div class="menu-meal"><strong>Завтрак:</strong> Греческий йогурт (без сахара) с горстью малины и грецкими орехами.</div>
+                <div class="menu-meal"><strong>Обед:</strong> Борщ без картофеля (на костном бульоне). Индейка, тушеная с овощами.</div>
+                <div class="menu-meal"><strong>Ужин:</strong> Овощной салат с авокадо и яйцом пашот.</div>
+            </div>
+        </div>
+
+        <div class="menu-day">
+            <div class="menu-day-header">Среда</div>
+            <div class="menu-day-body">
+                <div class="menu-meal"><strong>Завтрак:</strong> Овсянка длительной варки (не быстрая!) с корицей и ложкой орехового масла.</div>
+                <div class="menu-meal"><strong>Обед:</strong> Салат "Цезарь" (без сухариков, с курицей и оливковым маслом). Кусочек льняного хлеба.</div>
+                <div class="menu-meal"><strong>Ужин:</strong> Запеченные кабачки с фаршем из индейки и сыром.</div>
+            </div>
+        </div>
+
+        <div class="menu-day">
+            <div class="menu-day-header">Четверг</div>
+            <div class="menu-day-body">
+                <div class="menu-meal"><strong>Завтрак:</strong> Творог (5%) с зеленью и ломтиком слабосоленой рыбы.</div>
+                <div class="menu-meal"><strong>Обед:</strong> Куриный суп с овощами. Стейк из лосося. Салат из капусты.</div>
+                <div class="menu-meal"><strong>Ужин:</strong> Овощное рагу (баклажаны, перец, помидоры) с нутом.</div>
+            </div>
+        </div>
+
+        <div class="menu-day">
+            <div class="menu-day-header">Пятница</div>
+            <div class="menu-day-body">
+                <div class="menu-meal"><strong>Завтрак:</strong> Яичница-глазунья с зеленью и кусочком авокадо.</div>
+                <div class="menu-meal"><strong>Обед:</strong> Салат из свежих овощей. Запеченная свинина (нежирная) или курица. Булгур (100 г).</div>
+                <div class="menu-meal"><strong>Ужин:</strong> Запеченная скумбрия с стручковой фасолью.</div>
+            </div>
+        </div>
+
+        <div class="menu-day">
+            <div class="menu-day-header">Суббота</div>
+            <div class="menu-day-body">
+                <div class="menu-meal"><strong>Завтрак:</strong> Смузи-боул (шпинат, половинка банана, кефир) с семенами чиа.</div>
+                <div class="menu-meal"><strong>Обед:</strong> Плов с бурым рисом и курицей (без переваривания).</div>
+                <div class="menu-meal"><strong>Ужин:</strong> Теплый салат с говядиной и рукколой.</div>
+            </div>
+        </div>
+
+        <div class="menu-day">
+            <div class="menu-day-header">Воскресенье</div>
+            <div class="menu-day-body">
+                <div class="menu-meal"><strong>Завтрак:</strong> Оладьи из кабачков (на льняной муке) со сметаной.</div>
+                <div class="menu-meal"><strong>Обед:</strong> Уха (рыбный суп без картофеля). Салат "Витаминный".</div>
+                <div class="menu-meal"><strong>Ужин:</strong> Запеченная куриная ножка с овощами гриль.</div>
+            </div>
+        </div>
+
+        <h3 style="color: var(--primary); margin-top: 32px; margin-bottom: 16px; font-size: 1.3rem;">🩸 Как повысить ферритин (железо) через меню</h3>
+        
+        <div class="nutrient-block">
+            <h4>Продукты-лидеры по железу:</h4>
+            <ul>
+                <li><strong>Печень</strong> (говяжья, куриная) — 1-2 раза в неделю по 100-150 г. Рекордсмен по гемовому железу.</li>
+                <li><strong>Красное мясо</strong> (говядина, баранина) — 2-3 раза в неделю.</li>
+                <li><strong>Субпродукты</strong> (сердце, язык) — хороший источник.</li>
+                <li><strong>Гречка, чечевица, нут, фасоль</strong> — растительное железо (усваивается хуже, но полезно).</li>
+                <li><strong>Шпинат, петрушка, гранат, свекла</strong> — дополнительная поддержка.</li>
+            </ul>
+        </div>
+
+        <div class="nutrient-block" style="border-left-color: var(--success); background: #eef5f0;">
+            <h4>🥝 Как улучшить усвоение железа (важно!):</h4>
+            <ul>
+                <li><strong>Витамин С</strong> усиливает всасывание железа в 2-3 раза. Добавляйте к мясным блюдам болгарский перец, лимон, помидоры, киви.</li>
+                <li><strong>Чай и кофе</strong> блокируют усвоение железа. Не пейте их в течение часа после еды.</li>
+                <li><strong>Кальций</strong> (молоко, сыр) тоже мешает усвоению железа — не сочетайте с мясными блюдами.</li>
+                <li><strong>Пример блюда:</strong> Гречка с говядиной и салатом из болгарского перца + стакан воды с лимоном.</li>
+            </ul>
+        </div>
+
+        <h3 style="color: var(--primary); margin-top: 32px; margin-bottom: 16px; font-size: 1.3rem;">☀️ Как повысить витамин D через меню</h3>
+        
+        <div class="nutrient-block" style="border-left-color: var(--warning); background: #fff4ed;">
+            <h4>Продукты-лидеры по витамину D:</h4>
+            <ul>
+                <li><strong>Жирная рыба</strong> (лосось, скумбрия, сельдь, тунец) — 2-3 раза в неделю. Главный пищевой источник.</li>
+                <li><strong>Печень трески</strong> — рекордсмен (в 1 ч.л. — дневная норма).</li>
+                <li><strong>Яичные желтки</strong> — витамин D в желтке, а не в белке.</li>
+                <li><strong>Сливочное масло, сыр, творог</strong> — содержат витамин D (в жирных сортах).</li>
+                <li><strong>Грибы</strong> (особенно выращенные под УФ-светом) — растительный источник.</li>
+            </ul>
+        </div>
+
+        <div class="nutrient-block" style="border-left-color: var(--success); background: #eef5f0;">
+            <h4>🥑 Как улучшить усвоение витамина D:</h4>
+            <ul>
+                <li><strong>Витамин D — жирорастворимый.</strong> Он усваивается только с жирами. Ешьте рыбу с оливковым маслом, яйца — с авокадо, сыр — с орехами.</li>
+                <li><strong>Солнце:</strong> 15-20 минут на открытом солнце (без крема) помогают организму синтезировать витамин D. Но в северных широтах этого недостаточно.</li>
+                <li><strong>Добавки:</strong> обсудите с врачом приём D3 (холекальциферол) — это самый надёжный способ поднять уровень.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ВКЛАДКА 4: ПОКУПКИ -->
+    <div id="shopping" class="tab-content">
+        <div class="intro-text">Список покупок для меню на неделю. Вы можете отмечать купленные продукты (галочки работают в браузере).</div>
+        
+        <ul class="shopping-list">
+            <li class="shopping-category">🥦 Овощи и зелень</li>
+            <li class="shopping-item"><input type="checkbox"> Шпинат (свежий или замороженный)</li>
+            <li class="shopping-item"><input type="checkbox"> Огурцы, помидоры</li>
+            <li class="shopping-item"><input type="checkbox"> Брокколи, стручковая фасоль</li>
+            <li class="shopping-item"><input type="checkbox"> Кабачки, баклажаны, болгарский перец</li>
+            <li class="shopping-item"><input type="checkbox"> Капуста белокочанная</li>
+            <li class="shopping-item"><input type="checkbox"> Авокадо (2-3 шт)</li>
+            <li class="shopping-item"><input type="checkbox"> Зелень (укроп, петрушка, руккола)</li>
+
+            <li class="shopping-category">🍎 Фрукты и ягоды</li>
+            <li class="shopping-item"><input type="checkbox"> Малина, клубника</li>
+            <li class="shopping-item"><input type="checkbox"> Банан (1-2 шт)</li>
+            <li class="shopping-item"><input type="checkbox"> Лимон</li>
+            <li class="shopping-item"><input type="checkbox"> Гранат (для железа)</li>
+            <li class="shopping-item"><input type="checkbox"> Киви (витамин С)</li>
+
+            <li class="shopping-category">🥩 Белок</li>
+            <li class="shopping-item"><input type="checkbox"> Куриная грудка, бедра</li>
+            <li class="shopping-item"><input type="checkbox"> Фарш индейки</li>
+            <li class="shopping-item"><input type="checkbox"> Рыба: треска, лосось, скумбрия</li>
+            <li class="shopping-item"><input type="checkbox"> Говядина</li>
+            <li class="shopping-item"><input type="checkbox"> Печень говяжья или куриная</li>
+            <li class="shopping-item"><input type="checkbox"> Яйца куриные (10 шт)</li>
+
+            <li class="shopping-category">🌾 Крупы и бакалея</li>
+            <li class="shopping-item"><input type="checkbox"> Гречка</li>
+            <li class="shopping-item"><input type="checkbox"> Овсяные хлопья длительной варки</li>
+            <li class="shopping-item"><input type="checkbox"> Булгур или киноа</li>
+            <li class="shopping-item"><input type="checkbox"> Чечевица, нут</li>
+            <li class="shopping-item"><input type="checkbox"> Бурый рис</li>
+            <li class="shopping-item"><input type="checkbox"> Хлеб цельнозерновой или льняной</li>
+            <li class="shopping-item"><input type="checkbox"> Оливковое масло Extra Virgin</li>
+
+            <li class="shopping-category">🥛 Молочное и орехи</li>
+            <li class="shopping-item"><input type="checkbox"> Греческий йогурт (без сахара)</li>
+            <li class="shopping-item"><input type="checkbox"> Творог 5%</li>
+            <li class="shopping-item"><input type="checkbox"> Сметана 10-15%</li>
+            <li class="shopping-item"><input type="checkbox"> Грецкие орехи, миндаль</li>
+            <li class="shopping-item"><input type="checkbox"> Семена чиа</li>
+            <li class="shopping-item"><input type="checkbox"> Сыр (нежирный)</li>
+        </ul>
+    </div>
+
+    <!-- ВКЛАДКА 5: ЧЕК-ЛИСТЫ -->
+    <div id="checklists" class="tab-content">
+        <div class="intro-text">Практические памятки. Вы можете отмечать выполненные пункты.</div>
+
+        <div class="checklist-box">
+            <h3>🍽️ Чек-лист: Правильный порядок еды</h3>
+            <div class="checklist-item"><input type="checkbox"> 1. Сначала съедаем овощи и зелень (клетчатка создает "щит" в желудке).</div>
+            <div class="checklist-item"><input type="checkbox"> 2. Затем едим белок (мясо, рыба, яйца, тофу).</div>
+            <div class="checklist-item"><input type="checkbox"> 3. Добавляем полезные жиры (оливковое масло, авокадо).</div>
+            <div class="checklist-item"><input type="checkbox"> 4. Только в конце едим углеводы (гарнир, хлеб, картофель, фрукты).</div>
+            <div class="checklist-item"><input type="checkbox"> 5. Пьем воду до еды, а не запиваем еду большим количеством жидкости.</div>
+        </div>
+
+        <div class="checklist-box">
+            <h3>🕵️ Чек-лист: Скрытые сахара</h3>
+            <div class="checklist-item"><input type="checkbox"> <strong>Соусы:</strong> Кетчуп, барбекю, сладкий чили содержат до 20% сахара.</div>
+            <div class="checklist-item"><input type="checkbox"> <strong>"Полезные" батончики:</strong> Мюсли-батончики часто содержат сироп глюкозы и мед.</div>
+            <div class="checklist-item"><input type="checkbox"> <strong>Обезжиренные йогурты:</strong> Чтобы убрать жир, производители добавляют сахар для вкуса.</div>
+            <div class="checklist-item"><input type="checkbox"> <strong>Пакетированные соки:</strong> Даже "100% сок" — это концентрированный сахар без клетчатки.</div>
+            <div class="checklist-item"><input type="checkbox"> <strong>Каши быстрого приготовления:</strong> Хлопья с ароматизаторами содержат добавленный сахар.</div>
+            <div class="checklist-item"><input type="checkbox"> <strong>Хлеб для тостов:</strong> Часто содержит сахар и сироп, в отличие от цельнозернового.</div>
+        </div>
+
+        <div class="checklist-box">
+            <h3>⚡ Чек-лист: Как избежать "энергетических качелей"</h3>
+            <div class="checklist-item"><input type="checkbox"> Не ем сладкое натощак (только после белка и овощей).</div>
+            <div class="checklist-item"><input type="checkbox"> Готовлю крупы "аль денте" (слегка недоваренные).</div>
+            <div class="checklist-item"><input type="checkbox"> Охлаждаю картофель и гречку перед едой (образуется резистентный крахмал).</div>
+            <div class="checklist-item"><input type="checkbox"> Прогуливаюсь 15 минут после плотного приема пищи.</div>
+            <div class="checklist-item"><input type="checkbox"> Пью достаточно воды в течение дня.</div>
+        </div>
+
+        <div class="checklist-box" style="border-left: 5px solid var(--warning);">
+            <h3>🩸 Чек-лист: Как повысить ферритин</h3>
+            <div class="checklist-item"><input type="checkbox"> Ем печень или красное мясо 1-2 раза в неделю.</div>
+            <div class="checklist-item"><input type="checkbox"> Добавляю к мясным блюдам продукты с витамином С (перец, лимон, киви).</div>
+            <div class="checklist-item"><input type="checkbox"> Не пью чай или кофе в течение часа после еды.</div>
+            <div class="checklist-item"><input type="checkbox"> Не сочетаю мясные блюда с молоком или сыром.</div>
+            <div class="checklist-item"><input type="checkbox"> Включаю в рацион гречку, чечевицу, шпинат, гранат.</div>
+        </div>
+
+        <div class="checklist-box" style="border-left: 5px solid var(--warning);">
+            <h3>☀️ Чек-лист: Как повысить витамин D</h3>
+            <div class="checklist-item"><input type="checkbox"> Ем жирную рыбу (лосось, скумбрия) 2-3 раза в неделю.</div>
+            <div class="checklist-item"><input type="checkbox"> Добавляю в рацион яичные желтки и сливочное масло.</div>
+            <div class="checklist-item"><input type="checkbox"> Сочетаю продукты с витамином D с полезными жирами (авокадо, орехи).</div>
+            <div class="checklist-item"><input type="checkbox"> Бываю на солнце 15-20 минут в день.</div>
+            <div class="checklist-item"><input type="checkbox"> Обсуждаю с врачом приём добавки D3.</div>
+        </div>
+    </div>
+
+    <!-- ВКЛАДКА 6: PDF-ГИД -->
+    <div id="access" class="tab-content">
+        <div class="pdf-hero">
+            <h2>📥 Полный PDF-гид «Твоя энергия без скачков»</h2>
+            <p>Всё, что вы видите на сайте — в удобном PDF-формате. Читайте где угодно, без интернета.</p>
+            <div class="price">452 <small>тенге</small></div>
+            <a href="https://wa.me/77777717707?text=Здравствуйте!%20Хочу%20оплатить%20и%20получить%20PDF-гид%20«Твоя%20энергия%20без%20скачков»%20(452%20тенге)" target="_blank" class="btn-whatsapp">
+                💬 Оплатить в WhatsApp и получить PDF
+            </a>
+        </div>
+
+        <div class="instruction-block">
+            <h3>📘 Что входит в PDF-гид:</h3>
+            <ul style="margin-left: 22px; line-height: 1.9; font-size: 1rem;">
+                <li><strong>📊 Расширенная таблица продуктов</strong> — более 50 позиций с цифрами скачков сахара.</li>
+                <li><strong>📅 Меню на неделю</strong> — готовый план питания с низким ГИ.</li>
+                <li><strong>🛒 Список покупок</strong> — сгруппированный по отделам магазина.</li>
+                <li><strong>✅ Чек-листы</strong> — скрытые сахара, порядок еды, ферритин и витамин D.</li>
+            </ul>
+        </div>
+
+        <div class="instruction-block">
+            <h3>📝 Как скачать PDF (пошагово):</h3>
+            <ol>
+                <li>Нажмите зелёную кнопку <strong>«💬 Оплатить в WhatsApp и получить PDF»</strong> выше.</li>
+                <li>Откроется чат с номером <strong>+7 777 771 77 07</strong> с готовым сообщением. Отправьте его.</li>
+                <li>В ответ вы получите <strong>реквизиты для оплаты</strong> (Kaspi или карта).</li>
+                <li>Переведите <strong>452 тенге</strong> и пришлите скриншот перевода.</li>
+                <li>В ответ мы отправим <strong>PDF-файл</strong> — сохраните его на телефон или компьютер.</li>
+            </ol>
+        </div>
+
+        <div class="instruction-block">
+            <h3>📱 Как смотреть PDF когда удобно:</h3>
+            <table class="pdf-how-table">
+                <thead>
+                    <tr><th>Где</th><th>Как открыть</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Телефон</strong></td><td>Сохранить в «Файлы» / «Загрузки» → открыть в любом PDF-просмотрщике (Adobe, встроенный на iPhone/Android).</td></tr>
+                    <tr><td><strong>Компьютер</strong></td><td>Скачать → открыть двойным кликом в браузере или Adobe Reader.</td></tr>
+                    <tr><td><strong>Без интернета</strong></td><td>PDF сохраняется на устройстве и читается офлайн — в самолёте, на даче, где угодно.</td></tr>
+                    <tr><td><strong>Распечатать</strong></td><td>Открыть → <code>Ctrl+P</code> (или «Поделиться → Печать») → носить с собой на бумаге.</td></tr>
+                    <tr><td><strong>На неделю</strong></td><td>Открыть вкладки «📅 Меню» и «🛒 Покупки» прямо с телефона в магазине — интернет нужен только для загрузки страницы.</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pdf-tip">
+            💡 <strong>Совет:</strong> добавьте сайт на главный экран телефона (в браузере → «Поделиться» → «На экран "Домой"»). Тогда он будет открываться как приложение — одним касанием, без ввода адреса.
+        </div>
+
+        <div class="instruction-block" style="text-align: center;">
+            <p style="font-size: 1rem; color: var(--text-light); margin-bottom: 12px;">Уже оплатили и потеряли ссылку?</p>
+            <a href="#" onclick="alert('Пожалуйста, напишите нам в WhatsApp на номер +7 777 771 77 07 — мы вышлем PDF повторно!')" style="color: var(--primary); text-decoration: underline; font-weight: 700; font-size: 1rem;">Написать в WhatsApp для повторной отправки</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentGoal = 'sugar';
+
+    function openTab(evt, tabName) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById(tabName).classList.add('active');
+        evt.currentTarget.classList.add('active');
+        evt.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+
+    function selectGoal(evt, goal) {
+        currentGoal = goal;
+        document.querySelectorAll('.goal-btn').forEach(btn => btn.classList.remove('active'));
+        evt.currentTarget.classList.add('active');
+
+        document.querySelectorAll('.input-item').forEach(item => {
+            const itemGoal = item.dataset.goal;
+            if (goal === 'all' || itemGoal === goal) {
+                item.style.display = 'flex';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        document.getElementById('recommendationResult').style.display = 'none';
+        document.querySelectorAll('.input-item').forEach(item => {
+            if (item.style.display === 'none') {
+                const input = item.querySelector('input');
+                if (input) input.value = '';
+            }
+        });
+    }
+
+    function generateRecommendations() {
+        const glucose = parseFloat(document.getElementById('gen_glucose').value);
+        const hba1c = parseFloat(document.getElementById('gen_hba1c').value);
+        const insulin = parseFloat(document.getElementById('gen_insulin').value);
+        const ldl = parseFloat(document.getElementById('gen_ldl').value);
+        const trig = parseFloat(document.getElementById('gen_trig').value);
+        const tsh = parseFloat(document.getElementById('gen_tsh').value);
+        const ferritin = parseFloat(document.getElementById('gen_ferritin').value);
+        const vitd = parseFloat(document.getElementById('gen_vitd').value);
+
+        let exclude = [];
+        let include = [];
+        let hasData = false;
+
+        const checkSugar = (currentGoal === 'sugar' || currentGoal === 'all');
+        const checkChol = (currentGoal === 'cholesterol' || currentGoal === 'all');
+        const checkThyroid = (currentGoal === 'thyroid' || currentGoal === 'all');
+        const checkIron = (currentGoal === 'iron' || currentGoal === 'all');
+        const checkVitD = (currentGoal === 'vitd' || currentGoal === 'all');
+
+        if (checkSugar) {
+            const sugarValues = [];
+            if (!isNaN(glucose)) sugarValues.push({name: 'глюкоза', val: glucose, norm: 5.6});
+            if (!isNaN(hba1c)) sugarValues.push({name: 'HbA1c', val: hba1c, norm: 5.7});
+            if (!isNaN(insulin)) sugarValues.push({name: 'инсулин', val: insulin, norm: 8.5});
+            const hasHighSugar = sugarValues.some(v => v.val >= v.norm);
+            if (hasHighSugar) {
+                hasData = true;
+                exclude.push("<strong>Сладкие напитки и соки:</strong> газировка, пакетированные соки.");
+                exclude.push("<strong>Рафинированные углеводы:</strong> белый хлеб, сдоба, белый рис, манка.");
+                exclude.push("<strong>Скрытые сахара:</strong> соусы, магазинные йогурты с наполнителями.");
+                include.push("<strong>Правило тарелки:</strong> 1/2 — овощи, 1/4 — белок, 1/4 — сложные углеводы.");
+                include.push("<strong>Клетчатка:</strong> зелень, огурцы, капуста в каждый прием пищи.");
+                include.push("<strong>Бобовые:</strong> чечевица, нут, фасоль — низкий гликемический индекс.");
+            } else if (sugarValues.length > 0) {
+                hasData = true;
+                include.push("<strong>Сахар и инсулин в норме:</strong> отличный результат! Поддерживайте рацион.");
+            }
+        }
+
+        if (checkChol) {
+            const hasHighChol = (!isNaN(ldl) && ldl >= 3.0) || (!isNaN(trig) && trig >= 1.7);
+            const hasCholData = !isNaN(ldl) || !isNaN(trig);
+            if (hasHighChol) {
+                hasData = true;
+                exclude.push("<strong>Трансжиры:</strong> маргарин, фастфуд, жареное во фритюре, выпечка.");
+                exclude.push("<strong>Насыщенные жиры:</strong> жирное мясо, колбасы, сосиски, сливочное масло (ограничить).");
+                include.push("<strong>Омега-3:</strong> жирная рыба 2-3 раза в неделю — снижает ЛПНП.");
+                include.push("<strong>Растворимая клетчатка:</strong> овсянка, псиллиум, яблоки, бобовые.");
+                include.push("<strong>Растительные масла:</strong> оливковое, льняное (заправляйте салаты).");
+            } else if (hasCholData) {
+                hasData = true;
+                include.push("<strong>Липидный профиль в норме:</strong> сохраняйте баланс жиров.");
+            }
+        }
+
+        if (checkThyroid && !isNaN(tsh)) {
+            hasData = true;
+            if (tsh > 4.0) {
+                exclude.push("<strong>Ограничить сырую капусту, сою:</strong> могут мешать усвоению йода.");
+                include.push("<strong>Щитовидная железа (ТТГ повышен):</strong> йод (морская капуста, йодированная соль) и селен (бразильский орех, яйца).");
+            } else {
+                include.push("<strong>ТТГ в норме:</strong> щитовидная железа работает в обычном режиме.");
+            }
+        }
+
+        if (checkIron && !isNaN(ferritin)) {
+            hasData = true;
+            if (ferritin < 50) {
+                exclude.push("<strong>Чай и кофе после еды:</strong> блокируют усвоение железа (не пейте в течение часа).");
+                exclude.push("<strong>Кальций с мясными блюдами:</strong> молоко, сыр мешают всасыванию железа.");
+                include.push("<strong>Печень, красное мясо:</strong> 1-2 раза в неделю — главные источники гемового железа.");
+                include.push("<strong>Витамин С:</strong> добавляйте к мясным блюдам перец, лимон, киви (усиливает усвоение в 2-3 раза).");
+                include.push("<strong>Гречка, чечевица, шпинат, гранат:</strong> растительные источники железа.");
+            } else if (ferritin <= 150) {
+                hasData = true;
+                include.push("<strong>Ферритин в оптимальном диапазоне (50-150):</strong> поддерживайте текущий рацион.");
+            } else {
+                hasData = true;
+                include.push("<strong>Ферритин повышен (>150):</strong> может быть признаком воспаления. Обсудите с врачом.");
+            }
+        }
+
+        if (checkVitD && !isNaN(vitd)) {
+            hasData = true;
+            if (vitd < 30) {
+                include.push("<strong>Жирная рыба (лосось, скумбрия, сельдь):</strong> 2-3 раза в неделю — главный пищевой источник.");
+                include.push("<strong>Яичные желтки, сливочное масло, сыр:</strong> содержат витамин D (в жирных сортах).");
+                include.push("<strong>Сочетайте с жирами:</strong> витамин D жирорастворимый — ешьте рыбу с оливковым маслом, яйца с авокадо.");
+                include.push("<strong>Солнце:</strong> 15-20 минут в день. При дефиците обсудите с врачом добавку D3.");
+            } else if (vitd <= 100) {
+                hasData = true;
+                include.push("<strong>Витамин D в оптимальном диапазоне (30-100 нг/мл):</strong> отличный результат! Поддерживайте уровень.");
+            } else {
+                hasData = true;
+                include.push("<strong>Витамин D повышен (>100):</strong> возможно избыточное потребление добавок. Проконсультируйтесь с врачом.");
+            }
+        }
+
+        const resDiv = document.getElementById('recommendationResult');
+        const exDiv = document.getElementById('exclusionList');
+        const inDiv = document.getElementById('inclusionList');
+
+        if (!hasData) {
+            alert('Пожалуйста, введите хотя бы один показатель для формирования рекомендаций.');
+            return;
+        }
+
+        exDiv.innerHTML = '';
+        inDiv.innerHTML = '';
+
+        if (exclude.length > 0) {
+            exclude = [...new Set(exclude)];
+            exDiv.innerHTML = `
+                <div class="rec-card">
+                    <h4>🚫 Что исключить или строго ограничить:</h4>
+                    <ul>${exclude.map(item => `<li>${item}</li>`).join('')}</ul>
+                </div>`;
+        }
+
+        if (include.length > 0) {
+            include = [...new Set(include)];
+            inDiv.innerHTML = `
+                <div class="rec-card good">
+                    <h4>✅ Что добавить в рацион:</h4>
+                    <ul>${include.map(item => `<li>${item}</li>`).join('')}</ul>
+                </div>`;
+        }
+
+        resDiv.style.display = 'block';
+        resDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'PrintScreen' || (e.ctrlKey && (e.key === 'p' || e.key === 's'))) {
+            e.preventDefault();
+            alert('Пожалуйста, не копируйте материалы. Скачайте полную версию после оплаты.');
+        }
+    });
+</script>
+</body>
+</html>
