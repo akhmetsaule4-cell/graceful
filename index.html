@@ -2,967 +2,452 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Твоя энергия без скачков | Интерактивный гид по питанию</title>
-    
-    <!-- ====== НАСТРОЙКИ ПРИЛОЖЕНИЯ (PWA) ====== -->
-    <link rel="icon" type="image/png" href="icon-192.png">
-    <link rel="apple-touch-icon" href="icon-192.png">
-    <link rel="manifest" href="manifest.json">
-    <!-- ======================================== -->
-    
-    <meta name="description" content="Бесплатный интерактивный гид по питанию: генератор рациона, таблица продуктов, меню, список покупок и чек-листы. Оплата PDF-версии через WhatsApp.">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commercial Proposal: Line SQM-CK-300SV</title>
     <style>
         :root {
-            --primary: #1e3d2f;
-            --primary-light: #2d5a45;
-            --accent: #5b8c6f;
-            --accent-light: #e6efe9;
-            --bg: #f7f5f0;
-            --card-bg: #ffffff;
-            --text: #1a2a22;
-            --text-light: #4a5a52;
-            --border: #d4cfc5;
-            --success: #2e7d4f;
-            --warning: #b87333;
-            --danger: #a8433a;
-            --radius-lg: 24px;
-            --radius-md: 16px;
-            --radius-sm: 10px;
-            --shadow-sm: 0 2px 12px rgba(30, 61, 47, 0.08);
-            --shadow-md: 0 8px 30px rgba(30, 61, 47, 0.12);
-        }
-        
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
-        html { font-size: 17px; }
-        
-        body { 
-            background: var(--bg); 
-            color: var(--text); 
-            padding: 24px 16px; 
-            display: flex; 
-            justify-content: center; 
-            position: relative; 
-            overflow-x: hidden; 
-            line-height: 1.65;
-            font-size: 1rem;
-        }
-        
-        .watermark-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 9999;
-            background-image: url("data:image/svg+xml,%3Csvg width='300' height='300' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='rgba(30,61,47,0.02)' font-family='Segoe UI' transform='rotate(-30 150 150)' text-anchor='middle'%3EТвоя энергия без скачков%3C/text%3E%3C/svg%3E");
-            background-repeat: repeat;
+            --primary-color: #0b3d91;
+            --secondary-color: #f39c12;
+            --text-color: #333;
+            --light-bg: #f4f7f6;
+            --white: #ffffff;
+            --border-color: #ddd;
         }
 
-        .container { 
-            background: var(--card-bg); 
-            max-width: 1100px; 
-            width: 100%; 
-            border-radius: var(--radius-lg); 
-            box-shadow: var(--shadow-md); 
-            overflow: hidden; 
-            position: relative; 
-            z-index: 1; 
-        }
-        
-        header { 
-            background: linear-gradient(135deg, var(--primary), var(--primary-light)); 
-            color: #fff; 
-            padding: 48px 32px; 
-            text-align: center; 
-            position: relative;
-        }
-        header::after {
-            content: '';
-            position: absolute;
-            bottom: -1px; left: 0; right: 0;
-            height: 24px;
-            background: var(--card-bg);
-            border-radius: 50% 50% 0 0;
-        }
-        header h1 { font-size: 2.4rem; margin-bottom: 12px; letter-spacing: 0.3px; font-weight: 800; line-height: 1.2; }
-        header p { font-size: 1.15rem; opacity: 0.95; font-weight: 400; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { color: var(--text-color); line-height: 1.6; background-color: var(--white); }
 
-        .disclaimer-box { 
-            background: #fff4ed; 
-            border-top: 3px solid var(--warning); 
-            border-bottom: 3px solid var(--warning); 
-            padding: 22px 32px; 
-            color: var(--text); 
+        /* Header & Nav */
+        header {
+            background-color: var(--primary-color); color: var(--white); padding: 1rem 5%;
+            position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between;
+            align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); flex-wrap: wrap; gap: 15px;
         }
-        .disclaimer-box h3 { color: var(--warning); font-size: 1.1rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; font-weight: 700; }
-        .disclaimer-box p { font-size: 0.95rem; line-height: 1.6; margin-bottom: 8px; color: var(--text); }
-        .disclaimer-box strong { color: var(--danger); font-weight: 700; }
-        
-        /* ===== ВКЛАДКИ ===== */
-        .tabs { 
-            display: flex; 
-            background: var(--accent-light); 
-            border-bottom: 2px solid var(--border); 
-            flex-wrap: wrap; 
-            padding: 8px 12px 0; 
-            gap: 6px;
+        .logo { font-size: 1.5rem; font-weight: bold; letter-spacing: 1px; }
+        nav ul { list-style: none; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+        nav a { color: var(--white); text-decoration: none; font-weight: 500; transition: color 0.3s; cursor: pointer; }
+        nav a:hover { color: var(--secondary-color); }
+
+        /* Language Switcher */
+        .lang-switcher { display: flex; gap: 5px; }
+        .lang-switcher button {
+            background: none; border: 1px solid white; color: white; padding: 5px 12px;
+            cursor: pointer; border-radius: 4px; font-weight: bold; transition: all 0.3s;
         }
-        .tab-btn { 
-            flex: 1; 
-            padding: 18px 16px; 
-            border: none; 
-            background: none; 
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--text-light); 
-            cursor: pointer; 
-            transition: 0.25s; 
-            text-align: center; 
-            min-width: 150px;
-            border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-            margin-top: 4px;
-            white-space: nowrap;
+        .lang-switcher button:hover { background: rgba(255,255,255,0.2); }
+        .lang-switcher button.active { background: var(--secondary-color); border-color: var(--secondary-color); }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(11, 61, 145, 0.8), rgba(11, 61, 145, 0.9)), url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: var(--white); padding: 80px 5%; text-align: center;
         }
-        .tab-btn:hover { color: var(--primary); background: rgba(255,255,255,0.6); }
-        .tab-btn.active { 
-            color: var(--primary); 
-            background: var(--card-bg); 
-            box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
-            font-weight: 800;
-            border-bottom: 3px solid var(--primary);
+        .hero h1 { font-size: 2.5rem; margin-bottom: 20px; line-height: 1.2; }
+        .hero p { font-size: 1.2rem; margin-bottom: 30px; max-width: 800px; margin: 0 auto 30px auto; }
+        .btn {
+            display: inline-block; padding: 15px 30px; background-color: var(--secondary-color);
+            color: var(--white); text-decoration: none; border-radius: 5px; font-weight: bold;
+            font-size: 1.1rem; transition: background 0.3s; border: none; cursor: pointer;
         }
-        
-        .tab-content { display: none; padding: 32px; animation: fadeIn 0.35s ease-in-out; }
-        .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .intro-text { 
-            font-size: 1.05rem; 
-            line-height: 1.75; 
-            color: var(--text); 
-            margin-bottom: 28px; 
-            background: var(--accent-light); 
-            padding: 20px 24px; 
-            border-radius: var(--radius-md); 
-            border-left: 5px solid var(--accent); 
-            font-weight: 500;
+        .btn:hover { background-color: #e67e22; }
+
+        /* Баннер представителя */
+        .representative-banner {
+            background-color: #ffcc00; color: #333; text-align: center; padding: 20px;
+            font-size: 1.2rem; box-shadow: 0 4px 6px rgba(0,0,0,0.2); border-bottom: 3px solid #e6b800;
+        }
+        .representative-banner a { color: #0b3d91; text-decoration: none; font-size: 1.4rem; font-weight: bold; text-transform: uppercase; }
+        .representative-banner a:hover { text-decoration: underline; }
+        .phone-number { font-size: 1.3rem; font-weight: bold; color: #d32f2f; margin-top: 10px; display: block; }
+        .cert-info { font-size: 1rem; color: #555; margin-top: 5px; }
+
+        /* Sections */
+        section { padding: 60px 5%; }
+        section h2 { text-align: center; font-size: 2rem; margin-bottom: 40px; color: var(--primary-color); position: relative; }
+        section h2::after {
+            content: ''; display: block; width: 60px; height: 4px;
+            background-color: var(--secondary-color); margin: 10px auto 0; border-radius: 2px;
         }
 
-        /* ===== ВЫБОР ЦЕЛИ ===== */
-        .goal-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 28px; }
-        .goal-btn { 
-            padding: 22px 14px; 
-            border: 2px solid var(--border); 
-            border-radius: var(--radius-md); 
-            background: var(--card-bg); 
-            cursor: pointer; 
-            text-align: center; 
-            transition: 0.25s; 
-            font-family: inherit; 
+        /* Main Machine */
+        .main-machine { background-color: var(--light-bg); }
+        .summary-card {
+            background: var(--white); padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 30px; align-items: center;
         }
-        .goal-btn:hover { border-color: var(--accent); background: var(--accent-light); transform: translateY(-2px); }
-        .goal-btn.active { 
-            border-color: var(--primary); 
-            background: var(--primary); 
-            color: #fff; 
-            box-shadow: 0 6px 20px rgba(30,61,47,0.25); 
+        .summary-image {
+            flex: 1 1 500px; height: 350px; border-radius: 8px; overflow: hidden;
+            display: flex; align-items: center; justify-content: center; background-color: #fff; border: 1px solid var(--border-color);
         }
-        .goal-btn .goal-icon { font-size: 2.2rem; display: block; margin-bottom: 10px; }
-        .goal-btn .goal-text { font-size: 0.95rem; font-weight: 700; line-height: 1.3; }
-        
+        .summary-image img { width: 100%; height: 100%; object-fit: contain; }
+        .summary-details { flex: 1 1 400px; }
+        .summary-details h3 { font-size: 1.8rem; margin-bottom: 15px; color: var(--primary-color); }
+        .summary-details ul { list-style: none; margin-bottom: 20px; }
+        .summary-details ul li { margin-bottom: 10px; font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+        .summary-details ul li span { font-weight: bold; color: var(--primary-color); display: inline-block; width: 180px; }
+
+        /* Equipment Grid */
+        .equipment-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card { background: var(--white); border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
+        .card:hover { box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .card-image { height: 250px; background-color: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border-color); padding: 10px; }
+        .card-image img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .card-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-content h3 { font-size: 1.2rem; margin-bottom: 10px; color: var(--primary-color); min-height: 50px; }
+        .card-price { font-size: 1.2rem; font-weight: bold; color: #d35400; margin-bottom: 10px; }
+        .card-desc { font-size: 0.95rem; color: #555; flex-grow: 1; }
+
+        /* Specs Table */
+        .specs-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: var(--white); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .specs-table th, .specs-table td { padding: 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        .specs-table th { background-color: var(--primary-color); color: var(--white); font-weight: 500; }
+        .specs-table tr:nth-child(even) { background-color: var(--light-bg); }
+
+        /* Gallery */
+        .engineering-gallery { display: flex; gap: 20px; margin-top: 30px; justify-content: center; flex-wrap: wrap; }
+        .engineering-gallery img { width: 48%; max-width: 500px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+
+        /* Brands */
+        .brands-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 20px; }
+        .brand-item { background: var(--white); padding: 15px; border-radius: 8px; border-left: 4px solid var(--secondary-color); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .brand-item strong { color: var(--primary-color); }
+
+        /* Terms */
+        .terms { background-color: var(--light-bg); }
+        .terms-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .term-box { background: var(--white); padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-top: 4px solid var(--secondary-color); }
+        .term-box h4 { font-size: 1.2rem; margin-bottom: 15px; color: var(--primary-color); }
+        .term-box p, .term-box li { font-size: 0.95rem; margin-bottom: 10px; }
+        .term-box ul { padding-left: 20px; }
+
+        /* Footer */
+        footer { background-color: #1a1a1a; color: #ccc; text-align: center; padding: 30px 5%; }
+        footer p { margin-bottom: 10px; }
+
         @media (max-width: 768px) {
-            .goal-selector { grid-template-columns: 1fr 1fr; }
-            .goal-btn { padding: 16px 10px; }
-            .goal-btn .goal-icon { font-size: 1.8rem; }
-            .goal-btn .goal-text { font-size: 0.88rem; }
+            nav ul { display: none; flex-direction: column; position: absolute; top: 60px; left: 0; width: 100%; background-color: var(--primary-color); padding: 20px; text-align: center; }
+            nav ul.active { display: flex; }
+            .menu-toggle { display: block; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+            .hero h1 { font-size: 1.8rem; }
+            .summary-details ul li span { width: 100%; display: block; margin-bottom: 5px; }
+            .engineering-gallery img { width: 100%; }
         }
-
-        /* ===== ГЕНЕРАТОР ===== */
-        .generator-box { 
-            background: var(--accent-light); 
-            border: 1px solid var(--border); 
-            border-radius: var(--radius-md); 
-            padding: 28px; 
-            margin-bottom: 28px; 
-        }
-        .input-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-bottom: 24px; }
-        .input-item { 
-            display: flex; 
-            flex-direction: column; 
-            background: var(--card-bg); 
-            padding: 18px; 
-            border-radius: var(--radius-sm); 
-            border: 1px solid var(--border); 
-        }
-        .input-item label { font-weight: 700; font-size: 0.95rem; margin-bottom: 8px; color: var(--primary); }
-        .input-item input { 
-            padding: 14px; 
-            border: 1.5px solid var(--border); 
-            border-radius: 10px; 
-            font-size: 17px; 
-            width: 100%; 
-            background: #fafaf8;
-            color: var(--text);
-            transition: 0.2s;
-            font-weight: 500;
-        }
-        .input-item input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(91,140,111,0.2); }
-        .input-item small { color: var(--text-light); font-size: 0.85rem; margin-top: 6px; font-weight: 500; }
-        
-        .btn-generate { 
-            background: var(--primary); 
-            color: #fff; 
-            border: none; 
-            padding: 20px; 
-            border-radius: var(--radius-sm); 
-            font-size: 1.15rem; 
-            font-weight: 700; 
-            width: 100%; 
-            cursor: pointer; 
-            transition: 0.25s; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            gap: 10px; 
-            letter-spacing: 0.3px;
-        }
-        .btn-generate:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(30,61,47,0.25); }
-
-        /* ===== РЕЗУЛЬТАТЫ ===== */
-        #recommendationResult { display: none; margin-top: 28px; animation: fadeIn 0.4s; }
-        #recommendationResult h3 { font-size: 1.3rem; margin-bottom: 18px; color: var(--primary); font-weight: 700; }
-        .rec-card { 
-            background: var(--card-bg); 
-            border-radius: var(--radius-md); 
-            padding: 24px; 
-            box-shadow: var(--shadow-sm); 
-            margin-bottom: 16px; 
-            border-left: 6px solid var(--danger); 
-        }
-        .rec-card h4 { color: var(--danger); margin-bottom: 14px; font-size: 1.1rem; font-weight: 800; }
-        .rec-card ul { margin-left: 22px; line-height: 1.75; color: var(--text); font-size: 1rem; }
-        .rec-card ul li { margin-bottom: 10px; }
-        .rec-card.good { border-left-color: var(--success); }
-        .rec-card.good h4 { color: var(--success); }
-
-        /* ===== ТАБЛИЦЫ ===== */
-        .table-wrapper { overflow-x: auto; border-radius: var(--radius-md); border: 1px solid var(--border); margin-bottom: 24px; -webkit-overflow-scrolling: touch; }
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 1rem; min-width: 650px; }
-        th, td { padding: 16px 18px; border-bottom: 1px solid var(--border); vertical-align: top; }
-        th { background: var(--accent-light); font-weight: 700; color: var(--primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
-        tr:hover { background: #fafaf8; }
-        td { color: var(--text); font-size: 0.98rem; }
-        .category-row td { background: var(--accent-light); font-weight: 800; color: var(--primary); font-size: 1.05rem; }
-        .val-low { color: var(--success); font-weight: 800; }
-        .val-neutral { color: var(--warning); font-weight: 800; }
-        .val-high { color: var(--danger); font-weight: 800; }
-
-        /* ===== МЕНЮ ===== */
-        .menu-day { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 16px; overflow: hidden; box-shadow: var(--shadow-sm); }
-        .menu-day-header { background: var(--primary); color: #fff; padding: 16px 22px; font-weight: 700; font-size: 1.1rem; }
-        .menu-day-body { padding: 22px; }
-        .menu-meal { margin-bottom: 14px; font-size: 1rem; line-height: 1.7; color: var(--text); }
-        .menu-meal:last-child { margin-bottom: 0; }
-        .menu-meal strong { color: var(--primary); display: inline-block; width: 95px; font-weight: 700; }
-
-        /* ===== СПИСОК ПОКУПОК ===== */
-        .shopping-list { list-style: none; padding: 0; }
-        .shopping-category { font-weight: 800; color: var(--primary); font-size: 1.15rem; margin-top: 26px; margin-bottom: 14px; border-bottom: 2px solid var(--accent); padding-bottom: 8px; }
-        .shopping-item { display: flex; align-items: center; margin-bottom: 12px; font-size: 1rem; color: var(--text); }
-        .shopping-item input { margin-right: 14px; width: 20px; height: 20px; cursor: pointer; accent-color: var(--primary); }
-
-        /* ===== ЧЕК-ЛИСТЫ ===== */
-        .checklist-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 26px; margin-bottom: 24px; box-shadow: var(--shadow-sm); }
-        .checklist-box h3 { color: var(--primary); margin-bottom: 20px; border-bottom: 2px solid var(--accent); padding-bottom: 12px; font-size: 1.15rem; font-weight: 800; }
-        .checklist-item { display: flex; align-items: flex-start; margin-bottom: 16px; font-size: 1rem; line-height: 1.65; color: var(--text); }
-        .checklist-item input[type="checkbox"] { margin-top: 4px; margin-right: 14px; width: 20px; height: 20px; cursor: pointer; flex-shrink: 0; accent-color: var(--primary); }
-
-        .nutrient-block { background: #fff4ed; border-left: 6px solid var(--warning); border-radius: var(--radius-sm); padding: 22px 26px; margin-bottom: 24px; }
-        .nutrient-block h4 { color: var(--warning); margin-bottom: 14px; font-size: 1.1rem; font-weight: 800; }
-        .nutrient-block ul { margin-left: 22px; line-height: 1.75; font-size: 1rem; color: var(--text); }
-        .nutrient-block ul li { margin-bottom: 8px; }
-
-        /* ===== PDF-ГИД ===== */
-        .pdf-hero { text-align: center; background: var(--accent-light); padding: 40px 24px; border-radius: var(--radius-md); border: 2px dashed var(--accent); margin-bottom: 28px; }
-        .pdf-hero h2 { font-size: 1.5rem; color: var(--primary); margin-bottom: 12px; }
-        .pdf-hero p { font-size: 1.05rem; color: var(--text); margin-bottom: 8px; }
-        .price { font-size: 3rem; font-weight: 800; color: var(--primary); margin: 18px 0; }
-        .price small { font-size: 1.1rem; font-weight: 400; color: var(--text-light); }
-        
-        .btn-whatsapp { 
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 10px; 
-            background: #1eb954; 
-            color: #fff; 
-            padding: 20px 48px; 
-            font-size: 1.15rem; 
-            font-weight: 700; 
-            border-radius: 50px; 
-            text-decoration: none; 
-            transition: 0.25s; 
-            box-shadow: 0 6px 20px rgba(30,185,84,0.35); 
-        }
-        .btn-whatsapp:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(30,185,84,0.45); }
-
-        .instruction-block { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 26px; margin-bottom: 24px; box-shadow: var(--shadow-sm); }
-        .instruction-block h3 { color: var(--primary); margin-bottom: 18px; font-size: 1.15rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
-        .instruction-block ol { margin-left: 22px; line-height: 1.75; color: var(--text); font-size: 1rem; }
-        .instruction-block ol li { margin-bottom: 12px; }
-        .instruction-block ol li strong { color: var(--primary); }
-
-        .pdf-how-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
-        .pdf-how-table th, .pdf-how-table td { padding: 14px 16px; border-bottom: 1px solid var(--border); text-align: left; font-size: 0.98rem; }
-        .pdf-how-table th { background: var(--accent-light); color: var(--primary); font-weight: 700; }
-        .pdf-how-table td { color: var(--text); }
-        .pdf-how-table tr:last-child td { border-bottom: none; }
-
-        .pdf-tip { background: #eef5f0; border-left: 6px solid var(--success); border-radius: var(--radius-sm); padding: 20px 24px; margin-bottom: 24px; font-size: 1rem; line-height: 1.7; color: var(--text); }
-        .pdf-tip strong { color: var(--success); }
-
-        /* ===== АДАПТИВНОСТЬ ===== */
-        @media (max-width: 768px) {
-            html { font-size: 16px; }
-            body { padding: 12px 8px; }
-            header { padding: 36px 20px; }
-            header h1 { font-size: 1.8rem; }
-            header p { font-size: 1rem; }
-            .tabs { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 6px 8px 0; }
-            .tabs::-webkit-scrollbar { display: none; }
-            .tab-btn { flex: 0 0 auto; font-size: 0.95rem; padding: 14px 16px; min-width: auto; }
-            .tab-content { padding: 20px 16px; }
-            .generator-box { padding: 20px 16px; }
-            .input-grid { grid-template-columns: 1fr; }
-            .btn-generate { padding: 18px; font-size: 1.05rem; }
-            .btn-whatsapp { width: 100%; padding: 18px; font-size: 1.05rem; }
-            .menu-meal strong { display: block; width: auto; margin-bottom: 4px; }
-            .goal-selector { grid-template-columns: 1fr 1fr; }
-            .goal-btn { padding: 16px 10px; }
-            .goal-btn .goal-icon { font-size: 1.8rem; }
-            .price { font-size: 2.5rem; }
-            .disclaimer-box { padding: 18px 20px; }
-            .disclaimer-box h3 { font-size: 1rem; }
-            .rec-card ul { margin-left: 18px; }
-            .instruction-block, .pdf-hero { padding: 20px 16px; }
-        }
+        @media (min-width: 769px) { .menu-toggle { display: none; } }
     </style>
 </head>
 <body>
 
-<div class="watermark-overlay"></div>
-
-<div class="container">
     <header>
-        <h1>🌿 Твоя энергия без скачков</h1>
-        <p>Интерактивный гид по питанию, сахару, холестерину и витаминам</p>
+        <div class="logo">Shengquan Machinery</div>
+        <button class="menu-toggle" onclick="document.querySelector('nav ul').classList.toggle('active')">☰</button>
+        
+        <div class="lang-switcher">
+            <button onclick="changeLang('ru')" id="btn-ru" class="active">RU</button>
+            <button onclick="changeLang('en')" id="btn-en">EN</button>
+            <button onclick="changeLang('kz')" id="btn-kz">KZ</button>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="#main-machine" class="trans" data-ru="Основная машина" data-en="Main Machine" data-kz="Негізгі машина">Основная машина</a></li>
+                <li><a href="#options" class="trans" data-ru="Доп. оборудование" data-en="Optional Equip." data-kz="Қосымша жабдық">Доп. оборудование</a></li>
+                <li><a href="#specs" class="trans" data-ru="Характеристики" data-en="Specifications" data-kz="Сипаттамалары">Характеристики</a></li>
+                <li><a href="#brands" class="trans" data-ru="Бренды" data-en="Brands" data-kz="Брендтер">Бренды</a></li>
+                <li><a href="#terms" class="trans" data-ru="Условия" data-en="Terms" data-kz="Шарттар">Условия</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <div class="disclaimer-box">
-        <h3>⚠️ ВАЖНО: Ознакомительный контент</h3>
-        <p>Данный сервис <strong>не является медицинской рекомендацией</strong>. Сгенерированный рацион носит образовательный характер. <strong>Обязательно посоветуйтесь с врачом</strong> перед изменением диеты и приёмом добавок.</p>
+    <section class="hero">
+        <h1 class="trans" data-ru="Полностью сервоприводная линия по производству подгузников для взрослых" data-en="Fully Servo Adult Diaper Making Machine" data-kz="Ересектерге арналған жаялықтарды өндіруге арналған толық сервоприводты желі">Полностью сервоприводная линия по производству подгузников для взрослых</h1>
+        <p class="trans" data-ru="Модель SQM-CK-300SV. Высокая скорость, надежность и полный контроль качества. Ознакомьтесь с коммерческим предложением." data-en="Model SQM-CK-300SV. High speed, reliability, and full quality control. Check out the commercial proposal." data-kz="SQM-CK-300SV моделі. Жоғары жылдамдық, сенімділік және толық сапа бақылауы. Коммерциялық ұсыныспен танысыңыз.">Модель SQM-CK-300SV. Высокая скорость, надежность и полный контроль качества. Ознакомьтесь с коммерческим предложением.</p>
+        <a href="#main-machine" class="btn trans" data-ru="Смотреть конфигурацию" data-en="View Configuration" data-kz="Конфигурацияны қарау">Смотреть конфигурацию</a>
+    </section>
+
+    <div class="representative-banner">
+        <p style="margin: 0;">
+            <strong class="trans" data-ru="Официальный эксклюзивный представитель в РФ и странах СНГ:" data-en="Official exclusive representative in Russia and CIS:" data-kz="Ресей және ТМД елдеріндегі ресми эксклюзивті өкіл:">Официальный эксклюзивный представитель в РФ и странах СНГ:</strong><br>
+            <a href="https://royalmachinery.ru" target="_blank">Royal Rich Machinery LTD (royalmachinery.ru)</a>
+        </p>
+        <p class="cert-info">
+            <strong class="trans" data-ru="Сертификат официального представителя от:" data-en="Official representative certificate dated:" data-kz="Ресми өкіл сертификатының күні:">Сертификат официального представителя от:</strong>
+            <span>22.10.2026</span>
+        </p>
+        <span class="phone-number">
+            <span class="trans" data-ru="Тел:" data-en="Tel:" data-kz="Тел:">Тел:</span>
+            <a href="tel:+79191479545" style="font-size: 1.4rem; color: #d32f2f;">+7 (919) 147-95-45</a>
+        </span>
     </div>
 
-    <div class="tabs">
-        <button class="tab-btn active" onclick="openTab(event, 'generator')">🧬 Мой рацион</button>
-        <button class="tab-btn" onclick="openTab(event, 'products')">📊 Таблица</button>
-        <button class="tab-btn" onclick="openTab(event, 'menu')">📅 Меню</button>
-        <button class="tab-btn" onclick="openTab(event, 'shopping')">🛒 Покупки</button>
-        <button class="tab-btn" onclick="openTab(event, 'checklists')">✅ Чек-листы</button>
-        <button class="tab-btn" onclick="openTab(event, 'pdf')">📥 PDF-Гид</button>
-    </div>
-
-    <!-- ВКЛАДКА 1: ГЕНЕРАТОР -->
-    <div id="generator" class="tab-content active">
-        <div class="intro-text">
-            <strong>Что это за сайт?</strong> Это бесплатный онлайн-гид для людей, которые хотят держать сахар под контролем, снизить «плохой» холестерин, поддержать щитовидку, ферритин и витамин D. Выберите цель ниже → введите свои анализы → получите персональный список «что исключить / что добавить». Без регистрации.
-        </div>
-
-        <div class="goal-selector">
-            <button class="goal-btn active" data-goal="sugar" onclick="selectGoal(event, 'sugar')">
-                <span class="goal-icon">📉</span>
-                <span class="goal-text">Снизить сахар</span>
-            </button>
-            <button class="goal-btn" data-goal="cholesterol" onclick="selectGoal(event, 'cholesterol')">
-                <span class="goal-icon">🩸</span>
-                <span class="goal-text">Холестерин</span>
-            </button>
-            <button class="goal-btn" data-goal="thyroid" onclick="selectGoal(event, 'thyroid')">
-                <span class="goal-icon">🦋</span>
-                <span class="goal-text">Щитовидка</span>
-            </button>
-            <button class="goal-btn" data-goal="iron" onclick="selectGoal(event, 'iron')">
-                <span class="goal-icon">🩸</span>
-                <span class="goal-text">Ферритин</span>
-            </button>
-            <button class="goal-btn" data-goal="vitd" onclick="selectGoal(event, 'vitd')">
-                <span class="goal-icon">☀️</span>
-                <span class="goal-text">Витамин D</span>
-            </button>
-            <button class="goal-btn" data-goal="all" onclick="selectGoal(event, 'all')">
-                <span class="goal-icon">🎯</span>
-                <span class="goal-text">Всё сразу</span>
-            </button>
-        </div>
-
-        <div class="generator-box">
-            <div class="input-grid">
-                <div class="input-item" data-goal="sugar">
-                    <label>Глюкоза натощак</label>
-                    <input type="number" id="gen_glucose" step="0.1" placeholder="ммоль/л">
-                    <small>Норма: < 5.6</small>
-                </div>
-                <div class="input-item" data-goal="sugar">
-                    <label>HbA1c (гликированный)</label>
-                    <input type="number" id="gen_hba1c" step="0.1" placeholder="%">
-                    <small>Норма: < 5.7%</small>
-                </div>
-                <div class="input-item" data-goal="sugar">
-                    <label>Инсулин натощак</label>
-                    <input type="number" id="gen_insulin" step="0.1" placeholder="мкЕд/мл">
-                    <small>Оптимум: < 8.5</small>
-                </div>
-
-                <div class="input-item" data-goal="cholesterol" style="display: none;">
-                    <label>ЛПНП («плохой» холестерин)</label>
-                    <input type="number" id="gen_ldl" step="0.1" placeholder="ммоль/л">
-                    <small>Цель: < 2.6</small>
-                </div>
-                <div class="input-item" data-goal="cholesterol" style="display: none;">
-                    <label>Триглицериды</label>
-                    <input type="number" id="gen_trig" step="0.1" placeholder="ммоль/л">
-                    <small>Норма: < 1.7</small>
-                </div>
-
-                <div class="input-item" data-goal="thyroid" style="display: none;">
-                    <label>ТТГ (щитовидная железа)</label>
-                    <input type="number" id="gen_tsh" step="0.1" placeholder="мЕд/л">
-                    <small>Норма: 0.4 - 4.0</small>
-                </div>
-
-                <div class="input-item" data-goal="iron" style="display: none;">
-                    <label>Ферритин (запасы железа)</label>
-                    <input type="number" id="gen_ferritin" step="0.1" placeholder="мкг/л">
-                    <small>Оптимум: 50 - 150</small>
-                </div>
-
-                <div class="input-item" data-goal="vitd" style="display: none;">
-                    <label>Витамин D (25-OH)</label>
-                    <input type="number" id="gen_vitd" step="0.1" placeholder="нг/мл">
-                    <small>Оптимум: 30 - 100</small>
-                </div>
+    <section id="main-machine" class="main-machine">
+        <h2 class="trans" data-ru="Основное оборудование" data-en="Main Equipment" data-kz="Негізгі жабдық">Основное оборудование</h2>
+        <div class="summary-card">
+            <div class="summary-image">
+                <img src="./main-machine.png" alt="Machine SQM-CK-300SV">
             </div>
-            <button class="btn-generate" onclick="generateRecommendations()">
-                ✨ Сформировать персональный рацион
-            </button>
+            <div class="summary-details">
+                <h3 class="trans" data-ru="Полностью сервоприводная машина" data-en="Fully Servo Machine" data-kz="Толық сервоприводты машина">Полностью сервоприводная машина</h3>
+                <ul>
+                    <li><span class="trans" data-ru="Модель:" data-en="Model:" data-kz="Модель:">Модель:</span> SQM-CK-300SV</li>
+                    <li><span class="trans" data-ru="Количество:" data-en="Quantity:" data-kz="Саны:">Количество:</span> <span class="trans" data-ru="1 компл." data-en="1 set" data-kz="1 жиынтық">1 компл.</span></li>
+                    <li><span class="trans" data-ru="Стоимость (FOB):" data-en="Price (FOB):" data-kz="Құны (FOB):">Стоимость (FOB):</span> $976 700 USD</li>
+                    <li><span class="trans" data-ru="Срок поставки:" data-en="Delivery time:" data-kz="Жеткізу мерзімі:">Срок поставки:</span> <span class="trans" data-ru="150 рабочих дней после получения аванса и утверждения чертежей" data-en="150 working days after receiving the advance and approving drawings" data-kz="авансты алып, сызбаларды бекіткеннен кейін 150 жұмыс күні">150 рабочих дней после получения аванса и утверждения чертежей</span></li>
+                </ul>
+                <p class="trans" data-ru="* Подробности конфигурации см. в разделе 'Технические характеристики'." data-en="* See the 'Specifications' section for configuration details." data-kz="* Конфигурация мәліметтерін 'Сипаттамалары' бөлімінен қараңыз."><em>* Подробности конфигурации см. в разделе 'Технические характеристики'.</em></p>
+            </div>
         </div>
+    </section>
 
-        <div id="recommendationResult">
-            <h3>Ваши персональные рекомендации:</h3>
-            <div id="exclusionList"></div>
-            <div id="inclusionList"></div>
-            <p style="font-size: 0.9rem; color: var(--text-light); text-align: center; margin-top: 18px;"><em>Данные рекомендации сформированы на основе общих клинических порогов (ADA, ESC, ВОЗ). Не являются заменой консультации врача.</em></p>
-        </div>
-    </div>
-
-    <!-- ВКЛАДКА 2: ТАБЛИЦА -->
-    <div id="products" class="tab-content">
-        <div class="intro-text">Расширенная таблица продуктов. Цифры показывают примерный прирост глюкозы (ммоль/л) или гликемический индекс (ГИ). Старайтесь выбирать зеленую зону.</div>
-        <div class="table-wrapper">
-            <table>
-                <thead><tr><th>Продукт</th><th>Прирост / ГИ</th><th>Комментарий</th></tr></thead>
-                <tbody>
-                    <tr class="category-row"><td colspan="3">🥦 Овощи (Основа рациона)</td></tr>
-                    <tr><td>Брокколи, шпинат, огурцы, кабачки</td><td class="val-low">Практически 0</td><td>Ешьте сколько угодно. Клетчатка замедляет всасывание сахара.</td></tr>
-                    <tr><td>Помидоры, перец болгарский</td><td class="val-low">+0,2</td><td>Отличные источники витамина С (помогает усвоению железа).</td></tr>
-                    <tr><td>Морковь (сырая) / (вареная)</td><td class="val-low">+0,4 / +1,5</td><td>Вареная морковь повышает сахар сильнее.</td></tr>
-                    <tr><td>Картофель (охлажденный)</td><td class="val-high">+2,8</td><td>Резистентный крахмал. Горячий картофель — +3,2.</td></tr>
-                    
-                    <tr class="category-row"><td colspan="3">🍎 Фрукты и ягоды (Порция 150-200 г)</td></tr>
-                    <tr><td>Малина, клубника, ежевика</td><td class="val-low">+0,5</td><td>Самые безопасные ягоды. Богаты витамином С.</td></tr>
-                    <tr><td>Яблоко, груша</td><td class="val-neutral">+1,2</td><td>Ешьте с кожурой, она содержит клетчатку.</td></tr>
-                    <tr><td>Апельсин, грейпфрут</td><td class="val-neutral">+1,6</td><td>Цельные фрукты лучше соков. Витамин С для усвоения железа.</td></tr>
-                    <tr><td>Банан (зеленоватый)</td><td class="val-neutral">+1,4</td><td>Спелый банан дает больше сахара.</td></tr>
-                    <tr><td>Виноград, арбуз, дыня</td><td class="val-high">+1,9</td><td>Высокий скачок. Ешьте строго после основного блюда.</td></tr>
-
-                    <tr class="category-row"><td colspan="3">🌾 Крупы и гарниры</td></tr>
-                    <tr><td>Чечевица, нут, фасоль</td><td class="val-low">+0,5</td><td>Лучший гарнир. Много белка, клетчатки и железа.</td></tr>
-                    <tr><td>Гречка (аль денте)</td><td class="val-neutral">+1,9</td><td>Не разваривайте. Содержит железо.</td></tr>
-                    <tr><td>Булгур, киноа, перловка</td><td class="val-neutral">+1,4</td><td>Хорошая альтернатива рису.</td></tr>
-                    <tr><td>Овсянка длительной варки</td><td class="val-neutral">+1,9</td><td>Хлопья быстрого приготовления — +2,6.</td></tr>
-                    <tr><td>Рис белый, кукурузная каша</td><td class="val-high">+2,9</td><td>Высокий скачок. Ограничить.</td></tr>
-
-                    <tr class="category-row"><td colspan="3">🥩 Белок (Мясо, рыба, яйца)</td></tr>
-                    <tr><td>Курица, индейка (грудка)</td><td class="val-low">0</td><td>Не повышают сахар. Основа обеда.</td></tr>
-                    <tr><td>Рыба (лосось, скумбрия, треска)</td><td class="val-low">0</td><td>Омега-3 снижает ЛПНП. Жирная рыба — источник витамина D.</td></tr>
-                    <tr><td>Яйца</td><td class="val-low">0</td><td>Идеальный завтрак. Желток содержит витамин D и железо.</td></tr>
-                    <tr><td>Печень (говяжья, куриная)</td><td class="val-low">0</td><td>Рекордсмен по железу и витамину D. 1-2 раза в неделю.</td></tr>
-                    <tr><td>Красное мясо (говядина, баранина)</td><td class="val-low">0</td><td>Гемовое железо — усваивается лучше всего.</td></tr>
-                    <tr><td>Колбаса, сосиски</td><td class="val-high">Скрытые жиры</td><td>Исключить. Повышают риск воспалений.</td></tr>
-
-                    <tr class="category-row"><td colspan="3">🍞 Хлеб и макароны</td></tr>
-                    <tr><td>Хлеб из льняной/миндальной муки</td><td class="val-low">~0</td><td>Лучший выбор для тостов.</td></tr>
-                    <tr><td>Цельнозерновой хлеб</td><td class="val-low">+0,8</td><td>В 2,5 раза ниже белого батона.</td></tr>
-                    <tr><td>Макароны из твердых сортов (аль денте)</td><td class="val-neutral">+1,7</td><td>Важно не переваривать!</td></tr>
-                    <tr><td>Белый батон, сдоба</td><td class="val-high">+2,0</td><td>Максимальный скачок. Исключить.</td></tr>
-
-                    <tr class="category-row"><td colspan="3">🥛 Молочные продукты и жиры</td></tr>
-                    <tr><td>Греческий йогурт (без сахара)</td><td class="val-low">+0,3</td><td>Отличный перекус с ягодами.</td></tr>
-                    <tr><td>Авокадо, орехи, семечки</td><td class="val-low">~0</td><td>Полезные жиры. Помогают усвоению витамина D.</td></tr>
-                    <tr><td>Оливковое, льняное масло</td><td class="val-low">0</td><td>Заправляйте салаты. Не жарьте.</td></tr>
-                    <tr><td>Сливочное масло</td><td class="val-neutral">0</td><td>Сахар не повышает, но повышает ЛПНП. Ограничить.</td></tr>
-                    <tr><td>Сыр, творог</td><td class="val-low">0</td><td>Источник кальция и витамина D (в жирных сортах).</td></tr>
-
-                    <tr class="category-row"><td colspan="3">🥤 Напитки</td></tr>
-                    <tr><td>Вода, чай, кофе без сахара</td><td class="val-low">0</td><td>Пейте сколько хотите. Но не запивайте железосодержащую еду чаем/кофе.</td></tr>
-                    <tr><td>Сладкая газировка, соки</td><td class="val-high">Мгновенный скачок</td><td>330 мл колы = 7 ложек сахара. Исключить!</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- ВКЛАДКА 3: МЕНЮ -->
-    <div id="menu" class="tab-content">
-        <div class="intro-text">Пример сбалансированного меню на неделю с низким гликемическим индексом. Вы можете менять блюда местами.</div>
+    <section id="options">
+        <h2 class="trans" data-ru="Опциональная комплектация" data-en="Optional Equipment" data-kz="Қосымша жабдық">Опциональная комплектация</h2>
         
-        <div class="menu-day">
-            <div class="menu-day-header">Понедельник</div>
-            <div class="menu-day-body">
-                <div class="menu-meal"><strong>Завтрак:</strong> Омлет из 2 яиц с шпинатом и помидорами. Ломтик цельнозернового хлеба. Зеленый чай.</div>
-                <div class="menu-meal"><strong>Обед:</strong> Салат из огурцов и зелени с оливковым маслом. Запеченная куриная грудка. Гречка (100 г готовой).</div>
-                <div class="menu-meal"><strong>Ужин:</strong> Запеченная рыба (треска) с брокколи. 2 ст.л. чечевицы.</div>
+        <div class="equipment-grid">
+            <!-- Glue -->
+            <div class="card">
+                <div class="card-image"><img src="./glue.png" alt="Glue Applicators"></div>
+                <div class="card-content">
+                    <h3 class="trans" data-ru="Аппликаторы термоплавкого клея (7 шт.)" data-en="Hot Melt Glue Applicators (7 pcs.)" data-kz="Термопластикалық желім аппликаторлары (7 дана)">Аппликаторы термоплавкого клея (7 шт.)</h3>
+                    <div class="card-price">$102 900 USD</div>
+                    <p class="card-desc trans" data-ru="Бренд: JDL (Китай) или Wahrheits. Конфигурация подтверждается после утверждения параметров продукции." data-en="Brand: JDL (China) or Wahrheits. Configuration confirmed after product parameters are approved." data-kz="Бренд: JDL (Қытай) немесе Wahrheits. Конфигурация өнім параметрлері бекітілгеннен кейін расталады."><strong>Бренд:</strong> JDL (Китай) или Wahrheits.<br>Конфигурация подтверждается после утверждения параметров продукции. Поставка вместе с линией.</p>
+                </div>
+            </div>
+
+            <!-- Stacker -->
+            <div class="card">
+                <div class="card-image"><img src="./stacker.png" alt="Stacker"></div>
+                <div class="card-content">
+                    <h3 class="trans" data-ru="Укладчик + 2 машины для запайки" data-en="Stacker + 2 bag sealing machines" data-kz="Жинаушы + қаптаманы пісіретін 2 машина">Укладчик + 2 машины для запайки</h3>
+                    <div class="card-price">$110 250 USD</div>
+                    <p class="card-desc trans" data-ru="Модель: SQ-PK200. Поставка вместе с производственной линией." data-en="Model: SQ-PK200. Delivered with the production line." data-kz="Модель: SQ-PK200. Өндірістік желімен бірге жеткізіледі."><strong>Модель:</strong> SQ-PK200.<br>Поставка вместе с производственной линией.</p>
+                </div>
+            </div>
+
+            <!-- Dust Remover -->
+            <div class="card">
+                <div class="card-image"><img src="./dust-remover.png" alt="Dust Remover"></div>
+                <div class="card-content">
+                    <h3 class="trans" data-ru="Барабанный пылеуловитель" data-en="Drum dust remover" data-kz="Барабанды шаң жинағыш">Барабанный пылеуловитель</h3>
+                    <div class="card-price">$34 650 USD</div>
+                    <p class="card-desc trans" data-ru="Бренд: Xiang Hong. Отрицательное давление, эффективное удаление пыли." data-en="Brand: Xiang Hong. Negative pressure, effective dust removal." data-kz="Бренд: Xiang Hong. Теріс қысым, шаңды тиімді кетіру."><strong>Бренд:</strong> Xiang Hong.<br>Отрицательное давление, эффективное удаление пыли. Поставка вместе с линией.</p>
+                </div>
+            </div>
+
+            <!-- Compressor -->
+            <div class="card">
+                <div class="card-image"><img src="./compressor.png" alt="Compressor"></div>
+                <div class="card-content">
+                    <h3 class="trans" data-ru="Воздушный компрессорный агрегат" data-en="Air compressor unit" data-kz="Ауа компрессорлық агрегаты">Воздушный компрессорный агрегат</h3>
+                    <div class="card-price">$9 250 USD</div>
+                    <p class="card-desc trans" data-ru="Бренд: HuaDa. Мощность: 37 кВт. Подача: 6,2 м³/ч. Ресивер: 1 м³. Осушитель: 50 л.с." data-en="Brand: HuaDa. Power: 37 kW. Capacity: 6.2 m³/h. Receiver: 1 m³. Dryer: 50 hp." data-kz="Бренд: HuaDa. Қуаты: 37 кВт. Өнімділігі: 6,2 м³/сағ. Ресивер: 1 м³. Кептіргіш: 50 а.к."><strong>Бренд:</strong> HuaDa.<br>Мощность: 37 кВт. Подача: 6,2 м³/ч. Ресивер: 1 м³. Осушитель: 50 л.с.</p>
+                </div>
+            </div>
+
+            <!-- Visual Detector -->
+            <div class="card">
+                <div class="card-image"><img src="./visual-detector.png" alt="Visual Detector"></div>
+                <div class="card-content">
+                    <h3 class="trans" data-ru="Система визуального контроля" data-en="Visual inspection system" data-kz="Визуалды бақылау жүйесі">Система визуального контроля</h3>
+                    <div class="card-price">$24 150 USD</div>
+                    <p class="card-desc trans" data-ru="Автоматически выявляет бракованные изделия (черные точки >2 мм, отсутствие деталей), гарантируя 100% первый сорт." data-en="Automatically detects defective products (black spots >2 mm, missing parts), ensuring 100% grade A products." data-kz="Ақаулы өнімдерді (2 мм-ден үлкен қара дақтар, бөлшектердің болмауы) автоматты түрде анықтайды, 100% бірінші сұрыпқа кепілдік береді.">Автоматически выявляет бракованные изделия (черные точки >2 мм, отсутствие деталей), гарантируя 100% первый сорт.</p>
+                </div>
+            </div>
+
+            <!-- Printer -->
+            <div class="card">
+                <div class="card-image"><img src="./printer.png" alt="Printer"></div>
+                <div class="card-content">
+                    <h3 class="trans" data-ru="Струйный принтер (дата производства)" data-en="Inkjet printer (production date)" data-kz="Сия бүріккіш принтер (өндірілген күні)">Струйный принтер (дата производства)</h3>
+                    <div class="card-price">$9 250 USD</div>
+                    <p class="card-desc trans" data-ru="Для нанесения даты производства на продукцию. Поставка вместе с линией." data-en="For printing the production date on products. Delivered with the line." data-kz="Өнімге өндірілген күнін басу үшін. Желімен бірге жеткізіледі.">Для нанесения даты производства на продукцию. Поставка вместе с линией.</p>
+                </div>
+            </div>
+
+            <!-- Metal Detector -->
+            <div class="card">
+                <div class="card-image"><img src="./metal-detector.png" alt="Metal Detector"></div>
+                <div class="card-content">
+                    <h3 class="trans" data-ru="Металлодетектор" data-en="Metal detector" data-kz="Металл детекторы">Металлодетектор</h3>
+                    <div class="card-price">$5 500 USD</div>
+                    <p class="card-desc trans" data-ru="Для контроля качества и безопасности продукции. Поставка вместе с линией." data-en="For product quality and safety control. Delivered with the line." data-kz="Өнімнің сапасы мен қауіпсіздігін бақылау үшін. Желімен бірге жеткізіледі.">Для контроля качества и безопасности продукции. Поставка вместе с линией.</p>
+                </div>
             </div>
         </div>
+    </section>
 
-        <div class="menu-day">
-            <div class="menu-day-header">Вторник</div>
-            <div class="menu-day-body">
-                <div class="menu-meal"><strong>Завтрак:</strong> Греческий йогурт (без сахара) с горстью малины и грецкими орехами.</div>
-                <div class="menu-meal"><strong>Обед:</strong> Борщ без картофеля (на костном бульоне). Индейка, тушеная с овощами.</div>
-                <div class="menu-meal"><strong>Ужин:</strong> Овощной салат с авокадо и яйцом пашот.</div>
-            </div>
+    <section id="specs">
+        <h2 class="trans" data-ru="Основные параметры" data-en="Main Specifications" data-kz="Негізгі параметрлер">Основные параметры</h2>
+        <table class="specs-table">
+            <tbody>
+                <tr>
+                    <th class="trans" data-ru="Параметр" data-en="Parameter" data-kz="Параметр">Параметр</th>
+                    <th class="trans" data-ru="Значение" data-en="Value" data-kz="Мәні">Значение</th>
+                </tr>
+                <tr>
+                    <td class="trans" data-ru="Размеры продукции (обхват талии/бедер)" data-en="Product sizes (waist/hip)" data-kz="Өнім өлшемдері (бел/жамбас)">Размеры продукции (обхват талии/бедер)</td>
+                    <td>S: 55-80 cm; M: 75-100 cm; L: 100-150 cm; XL: 130-170 cm; XXL: 160-190 cm</td>
+                </tr>
+                <tr>
+                    <td class="trans" data-ru="Проектная скорость" data-en="Design speed" data-kz="Жобалық жылдамдық">Проектная скорость</td>
+                    <td class="trans" data-ru="350 шт./мин (размер M)" data-en="350 pcs/min (size M)" data-kz="350 дана/мин (M өлшемі)">350 шт./мин (размер M)</td>
+                </tr>
+                <tr>
+                    <td class="trans" data-ru="Стабильная рабочая скорость" data-en="Stable working speed" data-kz="Тұрақты жұмыс жылдамдығы">Стабильная рабочая скорость</td>
+                    <td class="trans" data-ru="250 шт./мин" data-en="250 pcs/min" data-kz="250 дана/мин">250 шт./мин</td>
+                </tr>
+                <tr>
+                    <td class="trans" data-ru="Отклонение массы изделия" data-en="Product weight deviation" data-kz="Өнім салмағының ауытқуы">Отклонение массы изделия</td>
+                    <td>±5 g</td>
+                </tr>
+                <tr>
+                    <td class="trans" data-ru="Выход годной продукции" data-en="Yield rate" data-kz="Жарамды өнім шығымы">Выход годной продукции</td>
+                    <td>≥ 95%</td>
+                </tr>
+                <tr>
+                    <td class="trans" data-ru="Коэффициент использования" data-en="Efficiency" data-kz="Пайдалану коэффициенті">Коэффициент использования</td>
+                    <td>≥ 85%</td>
+                </tr>
+                <tr>
+                    <td class="trans" data-ru="Электропитание" data-en="Power supply" data-kz="Электр қоректендіру">Электропитание</td>
+                    <td class="trans" data-ru="3 фазы, 380 В, 50 Гц" data-en="3 phase, 380V, 50Hz" data-kz="3 фаза, 380 В, 50 Гц">3 фазы, 380 В, 50 Гц</td>
+                </tr>
+                <tr>
+                    <td class="trans" data-ru="Установленная мощность" data-en="Installed capacity" data-kz="Орнатылған қуат">Установленная мощность</td>
+                    <td class="trans" data-ru="550 кВт (без клеевого аппарата), 650 кВт (с клеевым аппаратом)" data-en="550 kW (without glue), 650 kW (with glue)" data-kz="550 кВт (желімсіз), 650 кВт (желіммен)">550 кВт (без клеевого аппарата), 650 кВт (с клеевым аппаратом)</td>
+                </tr>
+                <tr>
+                    <td class="trans" data-ru="Габариты основной машины" data-en="Main machine dimensions" data-kz="Негізгі машинаның габариттері">Габариты основной машины</td>
+                    <td class="trans" data-ru="45 м × 2 м × 4 м" data-en="45 m × 2 m × 4 m" data-kz="45 м × 2 м × 4 м">45 м × 2 м × 4 м</td>
+                </tr>
+                <tr>
+                    <td class="trans" data-ru="Размеры рабочей площадки" data-en="Working space dimensions" data-kz="Жұмыс алаңының өлшемдері">Размеры рабочей площадки</td>
+                    <td class="trans" data-ru="65 м × 8 м × 4,5 м" data-en="65 m × 8 m × 4.5 m" data-kz="65 м × 8 м × 4,5 м">65 м × 8 м × 4,5 м</td>
+                </tr>
+                <tr>
+                    <td class="trans" data-ru="Количество контейнеров для погрузки" data-en="Container loading quantity" data-kz="Тиеуге арналған контейнерлер саны">Количество контейнеров для погрузки</td>
+                    <td>7 × 40HQ</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="engineering-gallery">
+            <img src="./pipes-1.png" alt="Air pipes">
+            <img src="./pipes-2.png" alt="Pneumatics">
         </div>
+    </section>
 
-        <div class="menu-day">
-            <div class="menu-day-header">Среда</div>
-            <div class="menu-day-body">
-                <div class="menu-meal"><strong>Завтрак:</strong> Овсянка длительной варки (не быстрая!) с корицей и ложкой орехового масла.</div>
-                <div class="menu-meal"><strong>Обед:</strong> Салат "Цезарь" (без сухариков, с курицей и оливковым маслом). Кусочек льняного хлеба.</div>
-                <div class="menu-meal"><strong>Ужин:</strong> Запеченные кабачки с фаршем из индейки и сыром.</div>
-            </div>
+    <section id="brands" style="background-color: var(--light-bg);">
+        <h2 class="trans" data-ru="Бренды основных комплектующих" data-en="Main Component Brands" data-kz="Негізгі жинақтаушы брендтері">Бренды основных комплектующих</h2>
+        <div class="brands-grid">
+            <div class="brand-item"><span class="trans" data-ru="ПЛК, Серводвигатели, Экраны: <strong>Mitsubishi (Япония)</strong>" data-en="PLC, Servo Motors, Screens: <strong>Mitsubishi (Japan)</strong>" data-kz="ПЛК, Серводвигательдер, Экрандар: <strong>Mitsubishi (Жапония)</strong>">ПЛК, Серводвигатели, Экраны: <strong>Mitsubishi (Япония)</strong></span></div>
+            <div class="brand-item"><span class="trans" data-ru="Корректор положения полотна: <strong>LIKE (Китай) / FIFE (США)</strong>" data-en="Web Guider: <strong>LIKE (China) / FIFE (USA)</strong>" data-kz="Матаның орнын түзеткіш: <strong>LIKE (Қытай) / FIFE (АҚШ)</strong>">Корректор положения полотна: <strong>LIKE (Китай) / FIFE (США)</strong></span></div>
+            <div class="brand-item"><span class="trans" data-ru="Датчики: <strong>Panasonic (Япония)</strong>" data-en="Sensors: <strong>Panasonic (Japan)</strong>" data-kz="Датчиктер: <strong>Panasonic (Жапония)</strong>">Датчики: <strong>Panasonic (Япония)</strong></span></div>
+            <div class="brand-item"><span class="trans" data-ru="Подшипники: <strong>HRB / NSK / SKF</strong>" data-en="Bearings: <strong>HRB / NSK / SKF</strong>" data-kz="Мойынтіректер: <strong>HRB / NSK / SKF</strong>">Подшипники: <strong>HRB / NSK / SKF</strong></span></div>
+            <div class="brand-item"><span class="trans" data-ru="Синхронные ремни: <strong>Gates (США)</strong>" data-en="Timing belts: <strong>Gates (USA)</strong>" data-kz="Синхронды белдіктер: <strong>Gates (АҚШ)</strong>">Синхронные ремни: <strong>Gates (США)</strong></span></div>
+            <div class="brand-item"><span class="trans" data-ru="Плоские ремни: <strong>HABASIT (Швейцария)</strong>" data-en="Flat belts: <strong>HABASIT (Switzerland)</strong>" data-kz="Жалпақ белдіктер: <strong>HABASIT (Швейцария)</strong>">Плоские ремни: <strong>HABASIT (Швейцария)</strong></span></div>
+            <div class="brand-item"><span class="trans" data-ru="Низковольтные компоненты: <strong>Schneider (Франция)</strong>" data-en="Low voltage components: <strong>Schneider (France)</strong>" data-kz="Төмен вольтты компоненттер: <strong>Schneider (Франция)</strong>">Низковольтные компоненты: <strong>Schneider (Франция)</strong></span></div>
+            <div class="brand-item"><span class="trans" data-ru="Контроль температуры: <strong>Omron (Япония)</strong>" data-en="Temperature control: <strong>Omron (Japan)</strong>" data-kz="Температураны бақылау: <strong>Omron (Жапония)</strong>">Контроль температуры: <strong>Omron (Япония)</strong></span></div>
+            <div class="brand-item"><span class="trans" data-ru="Пневматика: <strong>Air Tac (Тайвань)</strong>" data-en="Pneumatics: <strong>Air Tac (Taiwan)</strong>" data-kz="Пневматика: <strong>Air Tac (Тайвань)</strong>">Пневматика: <strong>Air Tac (Тайвань)</strong></span></div>
+            <div class="brand-item"><span class="trans" data-ru="Планетарные редукторы: <strong>Hubei Planets (Китай)</strong>" data-en="Planetary reducers: <strong>Hubei Planets (China)</strong>" data-kz="Планетарлық редукторлар: <strong>Hubei Planets (Қытай)</strong>">Планетарные редукторы: <strong>Hubei Planets (Китай)</strong></span></div>
         </div>
+    </section>
 
-        <div class="menu-day">
-            <div class="menu-day-header">Четверг</div>
-            <div class="menu-day-body">
-                <div class="menu-meal"><strong>Завтрак:</strong> Творог (5%) с зеленью и ломтиком слабосоленой рыбы.</div>
-                <div class="menu-meal"><strong>Обед:</strong> Куриный суп с овощами. Стейк из лосося. Салат из капусты.</div>
-                <div class="menu-meal"><strong>Ужин:</strong> Овощное рагу (баклажаны, перец, помидоры) с нутом.</div>
-            </div>
-        </div>
-
-        <div class="menu-day">
-            <div class="menu-day-header">Пятница</div>
-            <div class="menu-day-body">
-                <div class="menu-meal"><strong>Завтрак:</strong> Яичница-глазунья с зеленью и кусочком авокадо.</div>
-                <div class="menu-meal"><strong>Обед:</strong> Салат из свежих овощей. Запеченная свинина (нежирная) или курица. Булгур (100 г).</div>
-                <div class="menu-meal"><strong>Ужин:</strong> Запеченная скумбрия с стручковой фасолью.</div>
-            </div>
-        </div>
-
-        <div class="menu-day">
-            <div class="menu-day-header">Суббота</div>
-            <div class="menu-day-body">
-                <div class="menu-meal"><strong>Завтрак:</strong> Смузи-боул (шпинат, половинка банана, кефир) с семенами чиа.</div>
-                <div class="menu-meal"><strong>Обед:</strong> Плов с бурым рисом и курицей (без переваривания).</div>
-                <div class="menu-meal"><strong>Ужин:</strong> Теплый салат с говядиной и рукколой.</div>
-            </div>
-        </div>
-
-        <div class="menu-day">
-            <div class="menu-day-header">Воскресенье</div>
-            <div class="menu-day-body">
-                <div class="menu-meal"><strong>Завтрак:</strong> Оладьи из кабачков (на льняной муке) со сметаной.</div>
-                <div class="menu-meal"><strong>Обед:</strong> Уха (рыбный суп без картофеля). Салат "Витаминный".</div>
-                <div class="menu-meal"><strong>Ужин:</strong> Запеченная куриная ножка с овощами гриль.</div>
-            </div>
-        </div>
-
-        <h3 style="color: var(--primary); margin-top: 32px; margin-bottom: 16px; font-size: 1.3rem;">🩸 Как повысить ферритин (железо) через меню</h3>
-        
-        <div class="nutrient-block">
-            <h4>Продукты-лидеры по железу:</h4>
-            <ul>
-                <li><strong>Печень</strong> (говяжья, куриная) — 1-2 раза в неделю по 100-150 г. Рекордсмен по гемовому железу.</li>
-                <li><strong>Красное мясо</strong> (говядина, баранина) — 2-3 раза в неделю.</li>
-                <li><strong>Субпродукты</strong> (сердце, язык) — хороший источник.</li>
-                <li><strong>Гречка, чечевица, нут, фасоль</strong> — растительное железо (усваивается хуже, но полезно).</li>
-                <li><strong>Шпинат, петрушка, гранат, свекла</strong> — дополнительная поддержка.</li>
-            </ul>
-        </div>
-
-        <div class="nutrient-block" style="border-left-color: var(--success); background: #eef5f0;">
-            <h4>🥝 Как улучшить усвоение железа (важно!):</h4>
-            <ul>
-                <li><strong>Витамин С</strong> усиливает всасывание железа в 2-3 раза. Добавляйте к мясным блюдам болгарский перец, лимон, помидоры, киви.</li>
-                <li><strong>Чай и кофе</strong> блокируют усвоение железа. Не пейте их в течение часа после еды.</li>
-                <li><strong>Кальций</strong> (молоко, сыр) тоже мешает усвоению железа — не сочетайте с мясными блюдами.</li>
-                <li><strong>Пример блюда:</strong> Гречка с говядиной и салатом из болгарского перца + стакан воды с лимоном.</li>
-            </ul>
-        </div>
-
-        <h3 style="color: var(--primary); margin-top: 32px; margin-bottom: 16px; font-size: 1.3rem;">☀️ Как повысить витамин D через меню</h3>
-        
-        <div class="nutrient-block" style="border-left-color: var(--warning); background: #fff4ed;">
-            <h4>Продукты-лидеры по витамину D:</h4>
-            <ul>
-                <li><strong>Жирная рыба</strong> (лосось, скумбрия, сельдь, тунец) — 2-3 раза в неделю. Главный пищевой источник.</li>
-                <li><strong>Печень трески</strong> — рекордсмен (в 1 ч.л. — дневная норма).</li>
-                <li><strong>Яичные желтки</strong> — витамин D в желтке, а не в белке.</li>
-                <li><strong>Сливочное масло, сыр, творог</strong> — содержат витамин D (в жирных сортах).</li>
-                <li><strong>Грибы</strong> (особенно выращенные под УФ-светом) — растительный источник.</li>
-            </ul>
-        </div>
-
-        <div class="nutrient-block" style="border-left-color: var(--success); background: #eef5f0;">
-            <h4>🥑 Как улучшить усвоение витамина D:</h4>
-            <ul>
-                <li><strong>Витамин D — жирорастворимый.</strong> Он усваивается только с жирами. Ешьте рыбу с оливковым маслом, яйца — с авокадо, сыр — с орехами.</li>
-                <li><strong>Солнце:</strong> 15-20 минут на открытом солнце (без крема) помогают организму синтезировать витамин D. Но в северных широтах этого недостаточно.</li>
-                <li><strong>Добавки:</strong> обсудите с врачом приём D3 (холекальциферол) — это самый надёжный способ поднять уровень.</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- ВКЛАДКА 4: ПОКУПКИ -->
-    <div id="shopping" class="tab-content">
-        <div class="intro-text">Список покупок для меню на неделю. Вы можете отмечать купленные продукты (галочки работают в браузере).</div>
-        
-        <ul class="shopping-list">
-            <li class="shopping-category">🥦 Овощи и зелень</li>
-            <li class="shopping-item"><input type="checkbox"> Шпинат (свежий или замороженный)</li>
-            <li class="shopping-item"><input type="checkbox"> Огурцы, помидоры</li>
-            <li class="shopping-item"><input type="checkbox"> Брокколи, стручковая фасоль</li>
-            <li class="shopping-item"><input type="checkbox"> Кабачки, баклажаны, болгарский перец</li>
-            <li class="shopping-item"><input type="checkbox"> Капуста белокочанная</li>
-            <li class="shopping-item"><input type="checkbox"> Авокадо (2-3 шт)</li>
-            <li class="shopping-item"><input type="checkbox"> Зелень (укроп, петрушка, руккола)</li>
-
-            <li class="shopping-category">🍎 Фрукты и ягоды</li>
-            <li class="shopping-item"><input type="checkbox"> Малина, клубника</li>
-            <li class="shopping-item"><input type="checkbox"> Банан (1-2 шт)</li>
-            <li class="shopping-item"><input type="checkbox"> Лимон</li>
-            <li class="shopping-item"><input type="checkbox"> Гранат (для железа)</li>
-            <li class="shopping-item"><input type="checkbox"> Киви (витамин С)</li>
-
-            <li class="shopping-category">🥩 Белок</li>
-            <li class="shopping-item"><input type="checkbox"> Куриная грудка, бедра</li>
-            <li class="shopping-item"><input type="checkbox"> Фарш индейки</li>
-            <li class="shopping-item"><input type="checkbox"> Рыба: треска, лосось, скумбрия</li>
-            <li class="shopping-item"><input type="checkbox"> Говядина</li>
-            <li class="shopping-item"><input type="checkbox"> Печень говяжья или куриная</li>
-            <li class="shopping-item"><input type="checkbox"> Яйца куриные (10 шт)</li>
-
-            <li class="shopping-category">🌾 Крупы и бакалея</li>
-            <li class="shopping-item"><input type="checkbox"> Гречка</li>
-            <li class="shopping-item"><input type="checkbox"> Овсяные хлопья длительной варки</li>
-            <li class="shopping-item"><input type="checkbox"> Булгур или киноа</li>
-            <li class="shopping-item"><input type="checkbox"> Чечевица, нут</li>
-            <li class="shopping-item"><input type="checkbox"> Бурый рис</li>
-            <li class="shopping-item"><input type="checkbox"> Хлеб цельнозерновой или льняной</li>
-            <li class="shopping-item"><input type="checkbox"> Оливковое масло Extra Virgin</li>
-
-            <li class="shopping-category">🥛 Молочное и орехи</li>
-            <li class="shopping-item"><input type="checkbox"> Греческий йогурт (без сахара)</li>
-            <li class="shopping-item"><input type="checkbox"> Творог 5%</li>
-            <li class="shopping-item"><input type="checkbox"> Сметана 10-15%</li>
-            <li class="shopping-item"><input type="checkbox"> Грецкие орехи, миндаль</li>
-            <li class="shopping-item"><input type="checkbox"> Семена чиа</li>
-            <li class="shopping-item"><input type="checkbox"> Сыр (нежирный)</li>
-        </ul>
-    </div>
-
-    <!-- ВКЛАДКА 5: ЧЕК-ЛИСТЫ -->
-    <div id="checklists" class="tab-content">
-        <div class="intro-text">Практические памятки. Вы можете отмечать выполненные пункты.</div>
-
-        <div class="checklist-box">
-            <h3>🍽️ Чек-лист: Правильный порядок еды</h3>
-            <div class="checklist-item"><input type="checkbox"> 1. Сначала съедаем овощи и зелень (клетчатка создает "щит" в желудке).</div>
-            <div class="checklist-item"><input type="checkbox"> 2. Затем едим белок (мясо, рыба, яйца, тофу).</div>
-            <div class="checklist-item"><input type="checkbox"> 3. Добавляем полезные жиры (оливковое масло, авокадо).</div>
-            <div class="checklist-item"><input type="checkbox"> 4. Только в конце едим углеводы (гарнир, хлеб, картофель, фрукты).</div>
-            <div class="checklist-item"><input type="checkbox"> 5. Пьем воду до еды, а не запиваем еду большим количеством жидкости.</div>
-        </div>
-
-        <div class="checklist-box">
-            <h3>🕵️ Чек-лист: Скрытые сахара</h3>
-            <div class="checklist-item"><input type="checkbox"> <strong>Соусы:</strong> Кетчуп, барбекю, сладкий чили содержат до 20% сахара.</div>
-            <div class="checklist-item"><input type="checkbox"> <strong>"Полезные" батончики:</strong> Мюсли-батончики часто содержат сироп глюкозы и мед.</div>
-            <div class="checklist-item"><input type="checkbox"> <strong>Обезжиренные йогурты:</strong> Чтобы убрать жир, производители добавляют сахар для вкуса.</div>
-            <div class="checklist-item"><input type="checkbox"> <strong>Пакетированные соки:</strong> Даже "100% сок" — это концентрированный сахар без клетчатки.</div>
-            <div class="checklist-item"><input type="checkbox"> <strong>Каши быстрого приготовления:</strong> Хлопья с ароматизаторами содержат добавленный сахар.</div>
-            <div class="checklist-item"><input type="checkbox"> <strong>Хлеб для тостов:</strong> Часто содержит сахар и сироп, в отличие от цельнозернового.</div>
-        </div>
-
-        <div class="checklist-box">
-            <h3>⚡ Чек-лист: Как избежать "энергетических качелей"</h3>
-            <div class="checklist-item"><input type="checkbox"> Не ем сладкое натощак (только после белка и овощей).</div>
-            <div class="checklist-item"><input type="checkbox"> Готовлю крупы "аль денте" (слегка недоваренные).</div>
-            <div class="checklist-item"><input type="checkbox"> Охлаждаю картофель и гречку перед едой (образуется резистентный крахмал).</div>
-            <div class="checklist-item"><input type="checkbox"> Прогуливаюсь 15 минут после плотного приема пищи.</div>
-            <div class="checklist-item"><input type="checkbox"> Пью достаточно воды в течение дня.</div>
-        </div>
-
-        <div class="checklist-box" style="border-left: 5px solid var(--warning);">
-            <h3>🩸 Чек-лист: Как повысить ферритин</h3>
-            <div class="checklist-item"><input type="checkbox"> Ем печень или красное мясо 1-2 раза в неделю.</div>
-            <div class="checklist-item"><input type="checkbox"> Добавляю к мясным блюдам продукты с витамином С (перец, лимон, киви).</div>
-            <div class="checklist-item"><input type="checkbox"> Не пью чай или кофе в течение часа после еды.</div>
-            <div class="checklist-item"><input type="checkbox"> Не сочетаю мясные блюда с молоком или сыром.</div>
-            <div class="checklist-item"><input type="checkbox"> Включаю в рацион гречку, чечевицу, шпинат, гранат.</div>
-        </div>
-
-        <div class="checklist-box" style="border-left: 5px solid var(--warning);">
-            <h3>☀️ Чек-лист: Как повысить витамин D</h3>
-            <div class="checklist-item"><input type="checkbox"> Ем жирную рыбу (лосось, скумбрия) 2-3 раза в неделю.</div>
-            <div class="checklist-item"><input type="checkbox"> Добавляю в рацион яичные желтки и сливочное масло.</div>
-            <div class="checklist-item"><input type="checkbox"> Сочетаю продукты с витамином D с полезными жирами (авокадо, орехи).</div>
-            <div class="checklist-item"><input type="checkbox"> Бываю на солнце 15-20 минут в день.</div>
-            <div class="checklist-item"><input type="checkbox"> Обсуждаю с врачом приём добавки D3.</div>
-        </div>
-    </div>
-
-    <!-- ВКЛАДКА 6: PDF-ГИД -->
-    <div id="pdf" class="tab-content">
-        <div class="pdf-hero">
-            <h2>📥 Полный PDF-гид «Твоя энергия без скачков»</h2>
-            <p>Всё, что вы видите на сайте — в удобном PDF-формате. Читайте где угодно, без интернета.</p>
-            <div class="price">452 <small>тенге</small></div>
+    <section id="terms" class="terms">
+        <h2 class="trans" data-ru="Условия поставки, оплаты и монтажа" data-en="Delivery, Payment and Installation Terms" data-kz="Жеткізу, төлеу және монтаждау шарттары">Условия поставки, оплаты и монтажа</h2>
+        <div class="terms-container">
             
-            <div style="display: flex; flex-direction: column; gap: 12px; align-items: center; margin-top: 20px;">
-                <!-- ТОЛЬКО КНОПКА WHATSAPP (Никаких прямых скачиваний) -->
-                <a href="https://wa.me/77777717707?text=Здравствуйте!%20Хочу%20оплатить%20и%20получить%20PDF-гид%20«Твоя%20энергия%20без%20скачков»%20(452%20тенге)" target="_blank" class="btn-whatsapp" style="width: 100%; max-width: 400px;">
-                    💬 Оплатить и получить в WhatsApp
-                </a>
-                
-                <p style="font-size: 0.95rem; color: var(--primary); font-weight: 700; margin-top: 10px;">
-                    * После оплаты вы получите доступ к скачиванию интерактивного PDF-файла.
-                </p>
+            <div class="term-box">
+                <h4 class="trans" data-ru="Срок поставки" data-en="Delivery time" data-kz="Жеткізу мерзімі">Срок поставки</h4>
+                <p class="trans" data-ru="150 рабочих дней после получения Продавцом авансового платежа (30%) и утверждения обеими сторонами чертежей образца." data-en="150 working days after the Seller receives the advance payment (30%) and both parties approve the sample drawings." data-kz="Сатушы 30% аванстық төлемді алып, екі тарап үлгі сызбаларын бекіткеннен кейін 150 жұмыс күні.">150 рабочих дней после получения Продавцом авансового платежа (30%) и утверждения обеими сторонами чертежей образца.</p>
+            </div>
+            
+            <div class="term-box">
+                <h4 class="trans" data-ru="Условия оплаты и этапы (L/C)" data-en="Payment terms and stages (L/C)" data-kz="Төлем шарттары мен кезеңдері (L/C)">Условия оплаты и этапы (L/C)</h4>
+                <p class="trans" data-ru="<strong>Шаг 1: 30% аванс (T/T)</strong> — для закупки расходников и запуска производства." data-en="<strong>Step 1: 30% advance (T/T)</strong> — for purchasing consumables and starting production." data-kz="<strong>1-қадам: 30% аванс (T/T)</strong> — шығын материалдарын сатып алу және өндірісті бастау үшін."><strong>Шаг 1: 30% аванс (T/T)</strong> — для закупки расходников и запуска производства.</p>
+                <p class="trans" data-ru="<strong>Шаг 2: Открытие 70% L/C (Аккредитив)</strong> — после уведомления о готовности оборудования к тестированию, открывается безотзывный документарный аккредитив в банке г. Алматы." data-en="<strong>Step 2: Opening 70% L/C (Letter of Credit)</strong> — after notification of equipment readiness, an irrevocable documentary letter of credit is opened in a bank in Almaty." data-kz="<strong>2-қадам: 70% L/C (Аккредитив) ашу</strong> — жабдықтың дайындығы туралы хабарламадан кейін Алматы қаласындағы банкте қайтарылмайтын құжаттық аккредитив ашылады."><strong>Шаг 2: Открытие 70% L/C (Аккредитив)</strong> — после уведомления о готовности оборудования к тестированию, открывается безотзывный документарный аккредитив в банке г. Алматы.</p>
+                <p class="trans" data-ru="<em>Аккредитив подтверждается китайским банком (Confirmed L/C) и соответствует правилам UCP 600.</em>" data-en="<em>The L/C is confirmed by a Chinese bank (Confirmed L/C) and complies with UCP 600 rules.</em>" data-kz="<em>Аккредитив қытай банкімен расталады (Confirmed L/C) және UCP 600 ережелеріне сәйкес келеді.</em>"><em>Аккредитив подтверждается китайским банком (Confirmed L/C) и соответствует правилам UCP 600.</em></p>
+            </div>
+
+            <div class="term-box">
+                <h4 class="trans" data-ru="Приемка, отгрузка и раскрытие L/C" data-en="Acceptance, shipment and L/C release" data-kz="Қабылдау, тиеу және L/C ашу">Приемка, отгрузка и раскрытие L/C</h4>
+                <p class="trans" data-ru="Процедура проходит на территории Китая. <strong>Ответственность Продавца:</strong> обеспечить доступ для тестирования, выполнить загрузку в контейнеры, опломбировать вагоны/контейнеры и предоставить отчет." data-en="The procedure takes place in China. <strong>Seller's responsibility:</strong> provide access for testing, load into containers, seal wagons/containers and provide a report." data-kz="Рәсім Қытай аумағында өтеді. <strong>Сатушының жауапкершілігі:</strong> тестілеуге қолжетімділікті қамтамасыз ету, контейнерлерге тиеу, вагондарды/контейнерлерді пломбалау және есеп беру.">Процедура проходит на территории Китая. <strong>Ответственность Продавца:</strong> обеспечить доступ для тестирования, выполнить загрузку в контейнеры, опломбировать вагоны/контейнеры и предоставить отчет.</p>
+                <p class="trans" data-ru="<strong>График снятия средств с аккредитива:</strong>" data-en="<strong>Schedule of L/C release:</strong>" data-kz="<strong>Аккредитивтен қаражат алу кестесі:</strong>"><strong>График снятия средств с аккредитива:</strong></p>
+                <ul>
+                    <li class="trans" data-ru="<strong>50% от суммы L/C</strong> — против коносамента (Bill of Lading), упаковочного листа и Акта приемки (FAT) на заводе." data-en="<strong>50% of the L/C amount</strong> — against the Bill of Lading, packing list and Factory Acceptance Test (FAT) certificate." data-kz="<strong>L/C сомасының 50%</strong> — коносамент (Bill of Lading), қаптама парағы және зауыттағы қабылдау актісіне (FAT) қарсы."><strong>50% от суммы L/C</strong> — против коносамента (Bill of Lading), упаковочного листа и Акта приемки (FAT) на заводе.</li>
+                    <li class="trans" data-ru="<strong>20% от суммы L/C</strong> — против подписанного Сторонами Акта о завершении пусконаладочных работ (SAT) в г. Алматы." data-en="<strong>20% of the L/C amount</strong> — against the signed Site Acceptance Test (SAT) certificate in Almaty." data-kz="<strong>L/C сомасының 20%</strong> — Алматы қаласындағы екі тарап қол қойған іске қосу-баптау жұмыстарының аяқталғаны туралы актіге (SAT) қарсы."><strong>20% от суммы L/C</strong> — против подписанного Сторонами Акта о завершении пусконаладочных работ (SAT) в г. Алматы.</li>
+                </ul>
+            </div>
+
+            <div class="term-box">
+                <h4 class="trans" data-ru="Монтаж и наладка" data-en="Installation and commissioning" data-kz="Монтаждау және баптау">Монтаж и наладка</h4>
+                <p class="trans" data-ru="Первая установка и регулировка (срок: 30 дней) за счет Продавца." data-en="First installation and adjustment (period: 30 days) at the Seller's expense." data-kz="Алғашқы орнату және реттеу (мерзімі: 30 күн) Сатушының есебінен.">Первая установка и регулировка (срок: 30 дней) за счет Продавца.</p>
+                <p class="trans" data-ru="При командировке за рубеж Покупатель оплачивает транспорт, проживание и переводчика." data-en="For business trips abroad, the Buyer pays for transport, accommodation and an interpreter." data-kz="Шетелге іссапар кезінде Сатып алушы көлік, тұру және аудармашы үшін төлейді.">При командировке за рубеж Покупатель оплачивает транспорт, проживание и переводчика.</p>
+                <p class="trans" data-ru="Сверхурочная работа или простой по вине Покупателя — $200/день за специалиста." data-en="Overtime work or downtime due to the Buyer's fault — $200/day per specialist." data-kz="Сатып алушының кінәсінен үстеме жұмыс немесе тоқтап қалу — маман үшін $200/күн.">Сверхурочная работа или простой по вине Покупателя — $200/день за специалиста.</p>
+            </div>
+
+            <div class="term-box" style="grid-column: 1 / -1;">
+                <h4 class="trans" data-ru="Требования к помещению для установки" data-en="Room requirements for installation" data-kz="Орнатуға арналған үй-жайға қойылатын талаптар">Требования к помещению для установки</h4>
+                <ul>
+                    <li class="trans" data-ru="Отсутствие вибрации, чистая среда, хорошая вентиляция, отсутствие взрывоопасных и коррозионных веществ." data-en="No vibration, clean environment, good ventilation, no explosive or corrosive substances." data-kz="Дірілдің болмауы, таза орта, жақсы желдету, жарылғыш және коррозиялық заттардың болмауы.">Отсутствие вибрации, чистая среда, хорошая вентиляция, отсутствие взрывоопасных и коррозионных веществ.</li>
+                    <li class="trans" data-ru="Ровный бетонный пол (марка не ниже 300), перепад высот 15-25 мм." data-en="Flat concrete floor (grade not lower than 300), height difference 15-25 mm." data-kz="Тегіс бетон еден (маркасы 300-ден төмен емес), биіктік айырмашылығы 15-25 мм.">Ровный бетонный пол (марка не ниже 300), перепад высот 15-25 мм.</li>
+                    <li class="trans" data-ru="Толщина бетонного пола не менее 200 мм. Несущая способность (если 2-й этаж) — не менее 3,5 т/м²." data-en="Concrete floor thickness at least 200 mm. Load-bearing capacity (if 2nd floor) — at least 3.5 t/m²." data-kz="Бетон еденнің қалыңдығы кемінде 200 мм. Көтергіштік қабілеті (егер 2-қабат болса) — кемінде 3,5 т/м².">Толщина бетонного пола не менее 200 мм. Несущая способность (если 2-й этаж) — не менее 3,5 т/м².</li>
+                    <li class="trans" data-ru="Расстояние от задней части машины до стены — не менее 1 метра." data-en="Distance from the back of the machine to the wall — at least 1 meter." data-kz="Машинаның артқы жағынан қабырғаға дейінгі қашықтық — кемінде 1 метр.">Расстояние от задней части машины до стены — не менее 1 метра.</li>
+                    <li class="trans" data-ru="Температура внутри цеха — не ниже 12-15 °C." data-en="Temperature inside the workshop — not lower than 12-15 °C." data-kz="Цех ішіндегі температура — 12-15 °C-тан төмен емес.">Температура внутри цеха — не ниже 12-15 °C.</li>
+                </ul>
             </div>
         </div>
+    </section>
 
-        <div class="instruction-block" style="border-left: 5px solid var(--success);">
-            <h3>💳 Как происходит оплата и получение файла?</h3>
-            <ol>
-                <li>Нажмите кнопку <strong>«💬 Оплатить и получить в WhatsApp»</strong> выше.</li>
-                <li>Откроется чат с номером <strong>+7 777 771 77 07</strong>. Напишите нам «Хочу оплатить». </li>
-                <li>Мы пришлем вам <strong>номер карты или ссылку Kaspi</strong> для перевода.</li>
-                <li>Переведите <strong>452 тенге</strong>.</li>
-                <li>Пришлите скриншот перевода. Мы сразу же отправим вам <strong>ссылку на скачивание PDF</strong> или сам файл в ответ!</li>
-            </ol>
-        </div>
+    <footer>
+        <p><strong>Shengquan Machinery Co., Ltd</strong></p>
+        <p style="color: #ffca28; font-size: 1.1rem; margin: 15px 0;">
+            <span class="trans" data-ru="Официальный эксклюзивный представитель по РФ и СНГ: " data-en="Official exclusive representative in Russia and CIS: " data-kz="Ресей және ТМД бойынша ресми эксклюзивті өкіл: ">Официальный эксклюзивный представитель по РФ и СНГ: </span>
+            <a href="https://royalmachinery.ru" target="_blank" style="color: #ffca28; text-decoration: underline;">Royal Rich Machinery LTD</a>
+        </p>
+        <p style="color: #aaa; font-size: 0.95rem; margin-bottom: 15px;">
+            <span class="trans" data-ru="Сертификат официального представителя от: 22.10.2026 г." data-en="Official representative certificate dated: 22.10.2026." data-kz="Ресми өкіл сертификатының күні: 22.10.2026.">Сертификат официального представителя от: 22.10.2026 г.</span>
+        </p>
+        <p class="trans" data-ru="Наша компания также может поставлять различные виды сырья для детских подгузников, подгузников для взрослых и гигиенических прокладок." data-en="Our company can also supply various types of raw materials for baby diapers, adult diapers, and sanitary pads." data-kz="Біздің компания сондай-ақ балалар жаялықтары, ересектер жаялықтары және гигиеналық прокладкалар үшін әртүрлі шикізат түрлерін жеткізе алады.">Наша компания также может поставлять различные виды сырья для детских подгузников, подгузников для взрослых и гигиенических прокладок.</p>
+        <p style="margin-top: 20px; font-size: 0.9rem; color: #888;">
+            &copy; <span id="year"></span> 
+            <span class="trans" data-ru="Все права защищены. Коммерческое предложение." data-en="All rights reserved. Commercial Proposal." data-kz="Барлық құқықтар қорғалған. Коммерциялық ұсыныс.">Все права защищены. Коммерческое предложение.</span>
+        </p>
+    </footer>
 
-        <div class="instruction-block">
-            <h3>📘 Что входит в PDF-гид:</h3>
-            <ul style="margin-left: 22px; line-height: 1.9; font-size: 1rem;">
-                <li><strong>📊 Расширенная таблица продуктов</strong> — более 50 позиций с цифрами скачков сахара.</li>
-                <li><strong>📅 Меню на неделю</strong> — готовый план питания с низким ГИ.</li>
-                <li><strong>🛒 Список покупок</strong> — сгруппированный по отделам магазина.</li>
-                <li><strong>✅ Чек-листы</strong> — скрытые сахара, порядок еды, ферритин и витамин D.</li>
-                <li><strong>💡 Советы по усвоению</strong> — как правильно сочетать продукты.</li>
-            </ul>
-        </div>
+    <script>
+        // Безопасный скрипт перевода (не скрывает элементы, а меняет текст)
+        function changeLang(lang) {
+            // Находим все элементы с классом trans
+            document.querySelectorAll('.trans').forEach(el => {
+                // Берем перевод из data-атрибута
+                const translation = el.getAttribute('data-' + lang);
+                if (translation) {
+                    el.innerHTML = translation;
+                }
+            });
 
-        <div class="instruction-block">
-            <h3>📱 Как смотреть PDF когда удобно:</h3>
-            <table class="pdf-how-table">
-                <thead>
-                    <tr><th>Где</th><th>Как открыть</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td><strong>Телефон</strong></td><td>Сохранить в «Файлы» / «Загрузки» → открыть в любом PDF-просмотрщике.</td></tr>
-                    <tr><td><strong>Компьютер</strong></td><td>Скачать → открыть двойным кликом в браузере.</td></tr>
-                    <tr><td><strong>Без интернета</strong></td><td>PDF сохраняется на устройстве и читается офлайн (в магазине, в поездке).</td></tr>
-                    <tr><td><strong>Распечатать</strong></td><td>Открыть → <code>Ctrl+P</code> (Печать).</td></tr>
-                </tbody>
-            </table>
-        </div>
+            // Обновляем активную кнопку
+            document.querySelectorAll('.lang-switcher button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + lang).classList.add('active');
+            
+            // Запоминаем выбор
+            localStorage.setItem('site_lang', lang);
+        }
 
-        <div class="pdf-tip">
-            💡 <strong>Совет:</strong> добавьте сайт на главный экран телефона (в браузере → «Поделиться» → «На экран "Домой"»). Тогда он будет открываться как приложение — одним касанием, без ввода адреса.
-        </div>
+        // Инициализация при загрузке страницы
+        window.onload = function() {
+            const savedLang = localStorage.getItem('site_lang') || 'ru';
+            changeLang(savedLang);
+            document.getElementById('year').textContent = new Date().getFullYear();
+        };
 
-        <div class="instruction-block" style="text-align: center;">
-            <p style="font-size: 1rem; color: var(--text-light); margin-bottom: 12px;">Уже оплатили и потеряли файл?</p>
-            <a href="https://wa.me/77777717707?text=Здравствуйте!%20Я%20уже%20оплатил%20PDF-гид,%20пришлите%20пожалуйста%20файл%20еще%20раз." target="_blank" style="color: var(--primary); text-decoration: underline; font-weight: 700; font-size: 1rem;">Написать в WhatsApp для повторной отправки</a>
-        </div>
-    </div>
-</div>
-
-<script>
-    let currentGoal = 'sugar';
-
-    function openTab(evt, tabName) {
-        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-        document.getElementById(tabName).classList.add('active');
-        evt.currentTarget.classList.add('active');
-        evt.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    }
-
-    function selectGoal(evt, goal) {
-        currentGoal = goal;
-        document.querySelectorAll('.goal-btn').forEach(btn => btn.classList.remove('active'));
-        evt.currentTarget.classList.add('active');
-
-        document.querySelectorAll('.input-item').forEach(item => {
-            const itemGoal = item.dataset.goal;
-            if (goal === 'all' || itemGoal === goal) {
-                item.style.display = 'flex';
-            } else {
-                item.style.display = 'none';
-            }
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                document.querySelector('nav ul').classList.remove('active');
+            });
         });
-
-        document.getElementById('recommendationResult').style.display = 'none';
-        document.querySelectorAll('.input-item').forEach(item => {
-            if (item.style.display === 'none') {
-                const input = item.querySelector('input');
-                if (input) input.value = '';
-            }
-        });
-    }
-
-    function generateRecommendations() {
-        const glucose = parseFloat(document.getElementById('gen_glucose').value);
-        const hba1c = parseFloat(document.getElementById('gen_hba1c').value);
-        const insulin = parseFloat(document.getElementById('gen_insulin').value);
-        const ldl = parseFloat(document.getElementById('gen_ldl').value);
-        const trig = parseFloat(document.getElementById('gen_trig').value);
-        const tsh = parseFloat(document.getElementById('gen_tsh').value);
-        const ferritin = parseFloat(document.getElementById('gen_ferritin').value);
-        const vitd = parseFloat(document.getElementById('gen_vitd').value);
-
-        let exclude = [];
-        let include = [];
-        let hasData = false;
-
-        const checkSugar = (currentGoal === 'sugar' || currentGoal === 'all');
-        const checkChol = (currentGoal === 'cholesterol' || currentGoal === 'all');
-        const checkThyroid = (currentGoal === 'thyroid' || currentGoal === 'all');
-        const checkIron = (currentGoal === 'iron' || currentGoal === 'all');
-        const checkVitD = (currentGoal === 'vitd' || currentGoal === 'all');
-
-        if (checkSugar) {
-            const sugarValues = [];
-            if (!isNaN(glucose)) sugarValues.push({name: 'глюкоза', val: glucose, norm: 5.6});
-            if (!isNaN(hba1c)) sugarValues.push({name: 'HbA1c', val: hba1c, norm: 5.7});
-            if (!isNaN(insulin)) sugarValues.push({name: 'инсулин', val: insulin, norm: 8.5});
-            const hasHighSugar = sugarValues.some(v => v.val >= v.norm);
-            if (hasHighSugar) {
-                hasData = true;
-                exclude.push("<strong>Сладкие напитки и соки:</strong> газировка, пакетированные соки.");
-                exclude.push("<strong>Рафинированные углеводы:</strong> белый хлеб, сдоба, белый рис, манка.");
-                exclude.push("<strong>Скрытые сахара:</strong> соусы, магазинные йогурты с наполнителями.");
-                include.push("<strong>Правило тарелки:</strong> 1/2 — овощи, 1/4 — белок, 1/4 — сложные углеводы.");
-                include.push("<strong>Клетчатка:</strong> зелень, огурцы, капуста в каждый прием пищи.");
-                include.push("<strong>Бобовые:</strong> чечевица, нут, фасоль — низкий гликемический индекс.");
-            } else if (sugarValues.length > 0) {
-                hasData = true;
-                include.push("<strong>Сахар и инсулин в норме:</strong> отличный результат! Поддерживайте рацион.");
-            }
-        }
-
-        if (checkChol) {
-            const hasHighChol = (!isNaN(ldl) && ldl >= 3.0) || (!isNaN(trig) && trig >= 1.7);
-            const hasCholData = !isNaN(ldl) || !isNaN(trig);
-            if (hasHighChol) {
-                hasData = true;
-                exclude.push("<strong>Трансжиры:</strong> маргарин, фастфуд, жареное во фритюре, выпечка.");
-                exclude.push("<strong>Насыщенные жиры:</strong> жирное мясо, колбасы, сосиски, сливочное масло (ограничить).");
-                include.push("<strong>Омега-3:</strong> жирная рыба 2-3 раза в неделю — снижает ЛПНП.");
-                include.push("<strong>Растворимая клетчатка:</strong> овсянка, псиллиум, яблоки, бобовые.");
-                include.push("<strong>Растительные масла:</strong> оливковое, льняное (заправляйте салаты).");
-            } else if (hasCholData) {
-                hasData = true;
-                include.push("<strong>Липидный профиль в норме:</strong> сохраняйте баланс жиров.");
-            }
-        }
-
-        if (checkThyroid && !isNaN(tsh)) {
-            hasData = true;
-            if (tsh > 4.0) {
-                exclude.push("<strong>Ограничить сырую капусту, сою:</strong> могут мешать усвоению йода.");
-                include.push("<strong>Щитовидная железа (ТТГ повышен):</strong> йод (морская капуста, йодированная соль) и селен (бразильский орех, яйца).");
-            } else {
-                include.push("<strong>ТТГ в норме:</strong> щитовидная железа работает в обычном режиме.");
-            }
-        }
-
-        if (checkIron && !isNaN(ferritin)) {
-            hasData = true;
-            if (ferritin < 50) {
-                exclude.push("<strong>Чай и кофе после еды:</strong> блокируют усвоение железа (не пейте в течение часа).");
-                exclude.push("<strong>Кальций с мясными блюдами:</strong> молоко, сыр мешают всасыванию железа.");
-                include.push("<strong>Печень, красное мясо:</strong> 1-2 раза в неделю — главные источники гемового железа.");
-                include.push("<strong>Витамин С:</strong> добавляйте к мясным блюдам перец, лимон, киви (усиливает усвоение в 2-3 раза).");
-                include.push("<strong>Гречка, чечевица, шпинат, гранат:</strong> растительные источники железа.");
-            } else if (ferritin <= 150) {
-                hasData = true;
-                include.push("<strong>Ферритин в оптимальном диапазоне (50-150):</strong> поддерживайте текущий рацион.");
-            } else {
-                hasData = true;
-                include.push("<strong>Ферритин повышен (>150):</strong> может быть признаком воспаления. Обсудите с врачом.");
-            }
-        }
-
-        if (checkVitD && !isNaN(vitd)) {
-            hasData = true;
-            if (vitd < 30) {
-                include.push("<strong>Жирная рыба (лосось, скумбрия, сельдь):</strong> 2-3 раза в неделю — главный пищевой источник.");
-                include.push("<strong>Яичные желтки, сливочное масло, сыр:</strong> содержат витамин D (в жирных сортах).");
-                include.push("<strong>Сочетайте с жирами:</strong> витамин D жирорастворимый — ешьте рыбу с оливковым маслом, яйца с авокадо.");
-                include.push("<strong>Солнце:</strong> 15-20 минут в день. При дефиците обсудите с врачом добавку D3.");
-            } else if (vitd <= 100) {
-                hasData = true;
-                include.push("<strong>Витамин D в оптимальном диапазоне (30-100 нг/мл):</strong> отличный результат! Поддерживайте уровень.");
-            } else {
-                hasData = true;
-                include.push("<strong>Витамин D повышен (>100):</strong> возможно избыточное потребление добавок. Проконсультируйтесь с врачом.");
-            }
-        }
-
-        const resDiv = document.getElementById('recommendationResult');
-        const exDiv = document.getElementById('exclusionList');
-        const inDiv = document.getElementById('inclusionList');
-
-        if (!hasData) {
-            alert('Пожалуйста, введите хотя бы один показатель для формирования рекомендаций.');
-            return;
-        }
-
-        exDiv.innerHTML = '';
-        inDiv.innerHTML = '';
-
-        if (exclude.length > 0) {
-            exclude = [...new Set(exclude)];
-            exDiv.innerHTML = `
-                <div class="rec-card">
-                    <h4>🚫 Что исключить или строго ограничить:</h4>
-                    <ul>${exclude.map(item => `<li>${item}</li>`).join('')}</ul>
-                </div>`;
-        }
-
-        if (include.length > 0) {
-            include = [...new Set(include)];
-            inDiv.innerHTML = `
-                <div class="rec-card good">
-                    <h4>✅ Что добавить в рацион:</h4>
-                    <ul>${include.map(item => `<li>${item}</li>`).join('')}</ul>
-                </div>`;
-        }
-
-        resDiv.style.display = 'block';
-        resDiv.scrollIntoView({ behavior: 'smooth' });
-    }
-</script>
+    </script>
 </body>
 </html>
